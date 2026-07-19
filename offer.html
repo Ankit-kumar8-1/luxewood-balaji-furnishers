@@ -147,8 +147,8 @@
   </div>
 
   <!-- Top Announcement Bar with Flying Cash Icon -->
-  <div
-    style="background: linear-gradient(90deg, #D4AF37 0%, #A8882A 50%, #D4AF37 100%); color: #1A1008; font-family: var(--font-ui); font-weight: 700; font-size: 0.88rem; padding: 8px 0; text-align: center; position: relative; z-index: 10;">
+  <div id="top-offer-bar"
+    style="background: linear-gradient(90deg, #D4AF37 0%, #A8882A 50%, #D4AF37 100%); color: #1A1008; font-family: var(--font-ui); font-weight: 700; font-size: 0.88rem; padding: 8px 16px; text-align: center; position: relative; z-index: 10; line-height: 1.4;">
     💸 UNWRAP ROYAL SHOWROOM CASH VOUCHERS WORTH ₹2,000 TO ₹15,000 INSTANTLY! 💸
   </div>
 
@@ -307,11 +307,11 @@
   <!-- Interactive Map Pin Modal (Flipkart/Zomato style) -->
   <div class="modal-overlay" id="offer-map-modal">
     <div class="modal-box" style="max-width: 600px; background: var(--clr-carbon); border: 2px solid var(--clr-gold);">
-      <button class="modal__close" id="modal-close-offer-map" style="color: #FFF; background: rgba(255,255,255,0.1); border-radius: 50%; width: 32px; height: 32px; border: none; font-size: 1.2rem; cursor: pointer;">&times;</button>
-      <div style="padding: var(--space-lg); text-align: center; color: var(--clr-cream);">
-        <h3 style="color: var(--clr-gold); margin-bottom: 4px; font-family: var(--font-display);">📍 Pin Delivery Address</h3>
-        <p style="font-size: 0.82rem; color: var(--clr-ash); margin-bottom: var(--space-md); font-family: var(--font-ui);">Drag or click the gold marker to point your home location on the map.</p>
-        <div style="height: 320px; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--clr-gold); margin-bottom: var(--space-md);">
+      <button class="modal__close" id="modal-close-offer-map" style="color: #FFF; background: rgba(255,255,255,0.1); border-radius: 50%; min-width: 36px; min-height: 36px; width: 36px; height: 36px; border: none; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+      <div style="padding: var(--space-md); text-align: center; color: var(--clr-cream);">
+        <h3 style="color: var(--clr-gold); margin-bottom: 4px; font-family: var(--font-display); font-size: 1.2rem;">📍 Pin Delivery Address</h3>
+        <p style="font-size: 0.8rem; color: var(--clr-ash); margin-bottom: var(--space-sm); font-family: var(--font-ui);">Tap the map to pin your home location.</p>
+        <div id="offer-map-wrap" style="height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--clr-gold); margin-bottom: var(--space-md);">
           <div id="offer-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
         </div>
         <button type="button" class="btn btn--primary btn--block" id="btn-confirm-map-pin" style="font-family: var(--font-ui); font-weight: 700;">Confirm Pinned Location ✓</button>
