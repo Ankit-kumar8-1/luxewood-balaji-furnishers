@@ -2538,10 +2538,23 @@ a {
     max-width: 100% !important;
   }
 
-  /* Stat cards distribution on smallest mobile screens */
+  /* Stat cards distribution on smallest mobile screens: compact 2x2 grid */
   .admin-main .stat-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: var(--space-sm) !important;
+  }
+
+  .admin-main .stat-card {
+    padding: var(--space-md) !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .admin-main .stat-card__number {
+    font-size: 1.8rem !important;
+  }
+
+  .admin-main .stat-card__label {
+    font-size: 0.72rem !important;
   }
 
   /* Step 2 gift box emoji: smaller on mobile */
