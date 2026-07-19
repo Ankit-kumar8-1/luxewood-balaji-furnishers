@@ -148,6 +148,29 @@
         width: 100% !important;
         flex: 1 1 auto !important;
       }
+      .catalog-hero {
+        padding: calc(76px + var(--space-xl)) 0 var(--space-xl) 0 !important;
+      }
+      .catalog-hero__title {
+        font-size: var(--fs-h1) !important;
+      }
+      .catalog-hero__subtitle {
+        font-size: 0.95rem !important;
+        margin-bottom: var(--space-lg) !important;
+      }
+      .product-counter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+      }
+    }
+    @media (max-width: 480px) {
+      .catalog-hero {
+        padding: calc(76px + var(--space-lg)) 0 var(--space-lg) 0 !important;
+      }
+      #voucher-code-wrap {
+        padding: var(--space-md) var(--space-sm) !important;
+      }
     }
   </style>
 </head>
@@ -247,8 +270,8 @@
   <section class="section" id="catalog">
     <div class="container">
       <!-- Royal Voucher Code Bar & Active Banner -->
-      <div id="voucher-code-wrap" style="max-width: 900px; margin: 0 auto var(--space-xl) auto; background: rgba(212, 175, 55, 0.12); border: 2px dashed var(--clr-gold); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md);">
-        <div style="display: flex; align-items: center; gap: var(--space-sm); flex: 1 1 300px;">
+      <div id="voucher-code-wrap" style="max-width: 900px; margin: 0 auto var(--space-xl) auto; background: rgba(212, 175, 55, 0.12); border: 2px dashed var(--clr-gold); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md);" class="voucher-code-bar">
+        <div style="display: flex; align-items: center; gap: var(--space-sm); flex: 1 1 240px;">
           <span style="font-size: 1.6rem;">🎟️</span>
           <div>
             <strong style="color: var(--clr-gold); font-size: 0.95rem; display: block; font-family: var(--font-ui);">Have a Royal Cash Voucher Code?</strong>
@@ -256,9 +279,9 @@
           </div>
         </div>
 
-        <div style="display: flex; gap: var(--space-xs); flex: 1 1 300px;">
-          <input type="text" id="voucher-input" class="search-input" placeholder="e.g. BALAJI-ROYAL-7500-XXXX" style="text-transform: uppercase; font-family: var(--font-mono); font-weight: 700; padding: 0.55rem 0.85rem;">
-          <button id="btn-apply-voucher" class="btn btn--primary btn--sm" style="box-shadow: var(--shadow-gold);">Apply Code</button>
+        <div class="voucher-input-wrap" style="display: flex; gap: var(--space-xs); flex: 1 1 260px;">
+          <input type="text" id="voucher-input" class="search-input" placeholder="e.g. BALAJI-ROYAL-7500-XXXX" style="flex: 1; text-transform: uppercase; font-family: var(--font-mono); font-weight: 700; padding: 0.55rem 0.85rem;">
+          <button id="btn-apply-voucher" class="btn btn--primary btn--sm" style="box-shadow: var(--shadow-gold); white-space: nowrap;">Apply Code</button>
         </div>
       </div>
 
@@ -497,12 +520,13 @@
         }
 
         // Helper to output card markup
-        function getCardHTML(p, tier, hasImage, isQualifying, netPrice) {
+        function getCardHTML(p, tier, hasImage, isQualifying, netPrice, isGrid) {
+          const cardWidth = isGrid ? 'width: 100%;' : 'flex: 0 0 280px; width: 280px; scroll-snap-align: start;';
           return `
-            <div class="card" data-id="${p.id}" style="${isQualifying ? 'border: 2px solid var(--clr-gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);' : ''}; flex: 0 0 290px; width: 290px; scroll-snap-align: start;">
+            <div class="card" data-id="${p.id}" style="${cardWidth}; ${isQualifying ? 'border: 2px solid var(--clr-gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);' : ''}">
               <div class="card__image-wrap">
-                ${hasImage ? `<img src="${hasImage}" alt="${p.name}">` : `<div class="card__placeholder-icon flex-center height-full">${p.images[0] || '🪑'}</div>`}
-                ${isQualifying ? `<span class="card__badge" style="background: linear-gradient(135deg, #FF5F56 0%, #D4AF37 100%); color: #FFF; font-weight: bold;">🔥 ULTRA OFFER (₹${activeVoucher.amount.toLocaleString('en-IN')} OFF)</span>` : (p.badge ? `<span class="card__badge">${p.badge}</span>` : '')}
+                ${hasImage ? `<img src="${hasImage}" alt="${p.name}">` : `<div class="card__placeholder-icon flex-center height-full">${p.images[0] || '\u{1FA91}'}</div>`}
+                ${isQualifying ? `<span class="card__badge" style="background: linear-gradient(135deg, #FF5F56 0%, #D4AF37 100%); color: #FFF; font-weight: bold;">\uD83D\uDD25 ULTRA OFFER (\u20B9${activeVoucher.amount.toLocaleString('en-IN')} OFF)</span>` : (p.badge ? `<span class="card__badge">${p.badge}</span>` : '')}
               </div>
               <div class="card__body">
                 <span class="card__category">${p.category}</span>
@@ -518,10 +542,10 @@
                   ` : `
                     <span class="card__price" style="font-size: 1.2rem;">${LuxeWood.formatPrice(p.price)}</span>
                     ${p.mrp > p.price ? `<span class="card__mrp" style="font-size: 0.85rem;">${LuxeWood.formatPrice(p.mrp)}</span>` : ''}
-                    ${activeVoucher ? `<span style="font-size: 0.72rem; color: var(--clr-ash); display: block; width: 100%; margin-top: 2px;">*(Requires min ₹${activeVoucher.minPrice.toLocaleString('en-IN')} order)*</span>` : ''}
+                    ${activeVoucher ? `<span style="font-size: 0.72rem; color: var(--clr-ash); display: block; width: 100%; margin-top: 2px;">*(Requires min \u20B9${activeVoucher.minPrice.toLocaleString('en-IN')} order)*</span>` : ''}
                   `}
                 </div>
-                <div class="card__actions" style="margin-top: 8px; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div class="card__actions" style="margin-top: 8px;">
                   <button class="btn btn--outline btn--sm quick-view-btn" data-id="${p.id}" style="padding: 0.5rem 0.6rem; font-size: 0.78rem;">Details</button>
                   <a href="index.html?product=${p.id}${activeVoucher ? `&voucher=${activeVoucher.code}` : ''}#enquiry" class="btn btn--primary btn--sm direct-enquire-btn" style="padding: 0.5rem 0.6rem; font-size: 0.78rem;">Enquire</a>
                 </div>
@@ -602,7 +626,7 @@
               isQualifying = true;
               netPrice = p.price - activeVoucher.amount;
             }
-            return getCardHTML(p, tier, hasImage, isQualifying, netPrice);
+            return getCardHTML(p, tier, hasImage, isQualifying, netPrice, true);
           }).join('');
         }
 

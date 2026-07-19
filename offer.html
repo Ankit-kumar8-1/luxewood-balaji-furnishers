@@ -62,7 +62,34 @@
         padding: var(--space-lg) var(--space-md) !important;
       }
       #offer-step-3 .card {
-        padding: var(--space-lg) var(--space-sm) !important;
+        padding: var(--space-lg) var(--space-md) !important;
+      }
+      .reveal-title {
+        font-size: clamp(1.3rem, 6vw, 1.9rem) !important;
+        line-height: 1.3;
+      }
+      .reveal-amount {
+        font-size: clamp(1.7rem, 8vw, 2.4rem) !important;
+      }
+      .reveal-actions {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-sm) !important;
+      }
+      #offer-step-1 .grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-sm) !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .reveal-title {
+        font-size: 1.25rem !important;
+      }
+      .reveal-amount {
+        font-size: 1.6rem !important;
+      }
+      #offer-step-3 .code-box strong {
+        font-size: 1.1rem !important;
+        letter-spacing: 1px !important;
       }
     }
   </style>
@@ -241,8 +268,8 @@
             style="font-family: var(--font-ui); color: var(--clr-gold); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-top: 4px;">🎉
             CONGRATULATIONS!</span>
 
-          <h2 style="color: #FFF; font-size: 2.4rem; margin: var(--space-xs) 0;">
-            You Won <span id="reveal-amount" style="color: var(--clr-gold); font-size: 2.8rem;">₹7,500</span> Royal Cash
+          <h2 class="reveal-title" style="color: #FFF; font-size: 2.4rem; margin: var(--space-xs) 0;">
+            You Won <span id="reveal-amount" class="reveal-amount" style="color: var(--clr-gold); font-size: 2.8rem;">₹7,500</span> Royal Cash
             Voucher!
           </h2>
           <p id="reveal-terms" style="color: var(--clr-ash); font-size: 1.05rem; margin-bottom: var(--space-lg);">Valid
@@ -262,7 +289,7 @@
             </div>
           </div>
 
-          <div class="grid-2" style="gap: var(--space-md);">
+          <div class="grid-2 reveal-actions" style="gap: var(--space-md);">
             <button class="btn btn--primary btn--lg" id="btn-download-voucher">
               📥 Download Voucher Card (PNG)
             </button>
