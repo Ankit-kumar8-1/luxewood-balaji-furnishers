@@ -1720,6 +1720,9 @@ a {
     align-items: stretch !important;
     gap: var(--space-sm) !important;
   }
+  .voucher-code-bar > div {
+    flex: none !important;
+  }
 
   .voucher-input-wrap {
     flex-direction: column !important;
