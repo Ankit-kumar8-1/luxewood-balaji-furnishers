@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--
+    Balaji Furnishers & Traders (LuxeWood) — index.html
+    Role: Ultra-Luxury Showroom & Customer Enquiry Portal
+    Dependencies: style.css, script.js
+    Phase: 1 — Step 3
+    Last Updated: 2026-07-18
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Balaji Furnishers & Traders — Ultra-luxury solid Sheesham & Teak wood furniture showroom in Palwal, Haryana near OBC Bank, Jaber Nagar.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Balaji Furnishers & Traders — Ultra-Luxury Furniture Palwal">
+  <meta property="og:description"
+    content="Handcrafted Sheesham & Teak wood luxury furniture for homes demanding the extraordinary.">
+  <meta property="og:type" content="website">
+
+  <title>Balaji Furnishers & Traders — Luxury Furniture Palwal</title>
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
+
+  <!-- Stylesheet & Leaflet Map CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+
+  <!-- ==========================================
+       1. TOP NAVIGATION BAR
+       ========================================== -->
+  <header class="top-nav" id="top-nav">
+    <div class="container top-nav__inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo__title">Balaji Furnishers</span>
+        <span class="nav-logo__subtitle">Est. 2009 · Jaber Nagar, Palwal</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="products.html" class="nav-link">Collection</a></li>
+          <li><a href="offer.html" class="nav-link" style="color: var(--clr-gold); font-weight: 700;">🎁 Cash Offer</a>
+          </li>
+          <li><a href="#why-us" class="nav-link">Why Us</a></li>
+          <li><a href="#enquiry" class="nav-link">Enquire</a></li>
+          <li><a href="#map" class="nav-link">Location</a></li>
+          <li><a href="admin.html" class="btn btn--outline btn--sm">Admin Portal</a></li>
+          <li><a href="#enquiry" class="btn btn--primary btn--sm">Book Visit</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+        <span class="mobile-toggle__bar"></span>
+        <span class="mobile-toggle__bar"></span>
+        <span class="mobile-toggle__bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#hero" class="nav-link mobile-link">Home</a>
+    <a href="products.html" class="nav-link mobile-link">Collection</a>
+    <a href="#why-us" class="nav-link mobile-link">Why Us</a>
+    <a href="#enquiry" class="nav-link mobile-link">Enquire</a>
+    <a href="#map" class="nav-link mobile-link">Location</a>
+    <a href="admin.html" class="btn btn--outline">Admin Portal</a>
+    <a href="#enquiry" class="btn btn--primary">Book Showroom Visit</a>
+  </div>
+
+  <!-- ==========================================
+       2. HERO SECTION
+       ========================================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" style="background-image: url('assets/balaji_hero_banner.png');">
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__watermark">BFT</div>
+
+    <div class="hero__content animate-fadeUp">
+      <span class="hero__eyebrow">PALWAL'S FINEST LUXURY SHOWROOM · SINCE 2009</span>
+      <h1 class="hero__title">Where Wood Tells A Timeless Story</h1>
+      <p class="hero__subtitle">
+        Handcrafted solid Sheesham & Teak wood masterpieces for homes that demand the extraordinary. Built near OBC
+        Bank, Jaber Nagar, Palwal.
+      </p>
+      <div class="hero__cta-group">
+        <a href="products.html" class="btn btn--primary btn--lg">Explore Collection →</a>
+        <a href="#map" class="btn btn--outline btn--lg">Visit Showroom</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll Down</span>
+      <div class="scroll-indicator__chevron"></div>
+    </div>
+  </section>
+
+  <!-- Announcement Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-track">
+      <span class="ticker-item">Free White-Glove Delivery within 50km Radius</span>
+      <span class="ticker-item">Balaji Furnishers & Traders — Near OBC Bank, Jaber Nagar, Palwal</span>
+      <span class="ticker-item">100% Solid Sheesham & Teak Wood — No MDF or Veneer</span>
+      <span class="ticker-item">Custom Handcrafted Orders Welcome</span>
+      <span class="ticker-item">Interest-Free EMI Available on Diamond Tier Pieces</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       3. COLLECTION SHOWCASE TEASER
+       ========================================== -->
+  <section class="section" id="collection-teaser"
+    style="background: linear-gradient(135deg, var(--clr-espresso) 0%, #1A1008 100%); color: var(--clr-cream); border-top: 1px solid var(--clr-bark); border-bottom: 1px solid var(--clr-gold-dim);">
+    <div class="container text-center" style="max-width: 960px; text-align: center;">
+      <span class="section-header__eyebrow" style="color: var(--clr-gold);">HANDCRAFTED EXCELLENCE</span>
+      <h2 style="color: var(--clr-cream); font-size: var(--fs-h1); margin-bottom: var(--space-sm);">Our Curated
+        Collection</h2>
+      <div class="gold-divider" style="margin: 0 auto var(--space-md) auto;"></div>
+      <p style="color: var(--clr-ash); font-size: 1.15rem; margin-bottom: var(--space-xl); line-height: 1.7;">
+        Explore our complete catalog of heirloom-quality solid Sheesham & Teak wood masterpieces on our dedicated
+        products page — featuring Maharaja King Beds, Darbar Hall Dining Tables, Rajputana Sofa Sets, and Executive
+        Office Suites.
+      </p>
+
+      <div class="grid-4" style="margin-bottom: var(--space-2xl);">
+        <a href="products.html?category=Bedroom" class="card"
+          style="padding: var(--space-md); text-align: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); transition: transform 0.3s ease;">
+          <div
+            style="aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-sm); margin-bottom: var(--space-sm);">
+            <img src="assets/maharaja_bed.png" alt="Bedroom Collection"
+              style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h4 style="color: var(--clr-gold); font-size: 1.1rem; margin-bottom: 4px;">Bedroom</h4>
+          <span style="font-size: 0.85rem; color: var(--clr-ash);">Sheesham Beds & Wardrobes</span>
+        </a>
+        <a href="products.html?category=Living" class="card"
+          style="padding: var(--space-md); text-align: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); transition: transform 0.3s ease;">
+          <div
+            style="aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-sm); margin-bottom: var(--space-sm);">
+            <img src="assets/rajputana_sofa.png" alt="Living Collection"
+              style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h4 style="color: var(--clr-gold); font-size: 1.1rem; margin-bottom: 4px;">Living Room</h4>
+          <span style="font-size: 0.85rem; color: var(--clr-ash);">Teak Sofas & Recliners</span>
+        </a>
+        <a href="products.html?category=Dining" class="card"
+          style="padding: var(--space-md); text-align: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); transition: transform 0.3s ease;">
+          <div
+            style="aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-sm); margin-bottom: var(--space-sm);">
+            <img src="assets/dining_table.png" alt="Dining Collection"
+              style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h4 style="color: var(--clr-gold); font-size: 1.1rem; margin-bottom: 4px;">Dining Sets</h4>
+          <span style="font-size: 0.85rem; color: var(--clr-ash);">Brass Inlay Teak Tables</span>
+        </a>
+        <a href="products.html?category=Office" class="card"
+          style="padding: var(--space-md); text-align: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); transition: transform 0.3s ease;">
+          <div
+            style="aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-sm); margin-bottom: var(--space-sm);">
+            <img src="assets/executive_desk.png" alt="Office Collection"
+              style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h4 style="color: var(--clr-gold); font-size: 1.1rem; margin-bottom: 4px;">Executive Office</h4>
+          <span style="font-size: 0.85rem; color: var(--clr-ash);">CEO Desks & Workstations</span>
+        </a>
+      </div>
+
+      <a href="products.html" class="btn btn--primary btn--lg" style="box-shadow: var(--shadow-gold);">
+        Open Full Products Collection Page →
+      </a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. WHY CHOOSE US SECTION (INDIAN HERITAGE & PROMISE)
+       ========================================== -->
+  <section class="section" id="why-us"
+    style="background: linear-gradient(180deg, var(--clr-smoke) 0%, var(--clr-cream) 100%); border-top: 1px solid var(--clr-linen); border-bottom: 1px solid var(--clr-linen);">
+    <div class="container">
+      <div class="section-header animate-fadeUp">
+        <span class="section-header__eyebrow">OUR PROMISE TO PALWAL · SINCE 2009</span>
+        <h2 class="section-header__title">Why Balaji Furnishers?</h2>
+        <div class="gold-divider"></div>
+        <p style="color: var(--clr-bark); font-size: 1.1rem; max-width: 680px; margin: 0 auto;">
+          Combining centuries-old Indian woodworking heritage with modern precision engineering for homes demanding
+          royal elegance.
+        </p>
+      </div>
+
+      <!-- 4 Core Pillars with Real Photos -->
+      <div class="grid-4" style="margin-bottom: var(--space-3xl);">
+        <div class="card" style="overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3); background: #FFF;">
+          <div style="aspect-ratio: 16/10; overflow: hidden; position: relative;">
+            <img src="assets/solid_wood.png" alt="100% Solid Wood"
+              style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="tier-badge tier-badge--gold"
+              style="position: absolute; top: 10px; right: 10px; font-size: 0.68rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">100%
+              Certified</span>
+          </div>
+          <div style="padding: var(--space-lg); text-align: left;">
+            <h3 style="font-size: 1.2rem; color: var(--clr-espresso); margin-bottom: 6px;">100% Solid Wood</h3>
+            <p style="font-size: 0.92rem; color: var(--clr-bark); line-height: 1.5;">
+              Zero MDF, zero particle board, zero plywood veneers. Every single piece is carved from certified,
+              kiln-seasoned Indian Sheesham & Teak.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3); background: #FFF;">
+          <div style="aspect-ratio: 16/10; overflow: hidden; position: relative;">
+            <img src="assets/legacy.png" alt="15+ Years Legacy" style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="tier-badge tier-badge--diamond"
+              style="position: absolute; top: 10px; right: 10px; font-size: 0.68rem;">15+ Yrs Legacy</span>
+          </div>
+          <div style="padding: var(--space-lg); text-align: left;">
+            <h3 style="font-size: 1.2rem; color: var(--clr-espresso); margin-bottom: 6px;">Trusted Showroom</h3>
+            <p style="font-size: 0.92rem; color: var(--clr-bark); line-height: 1.5;">
+              Trusted by over 3,000 families across Palwal, Faridabad, Gurgaon & Delhi NCR since 2009 near OBC Bank,
+              Jaber Nagar.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3); background: #FFF;">
+          <div style="aspect-ratio: 16/10; overflow: hidden; position: relative;">
+            <img src="assets/craftsmanship.png" alt="Master Indian Artisans"
+              style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="tier-badge tier-badge--gold"
+              style="position: absolute; top: 10px; right: 10px; font-size: 0.68rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">Royal
+              Hand-Carving</span>
+          </div>
+          <div style="padding: var(--space-lg); text-align: left;">
+            <h3 style="font-size: 1.2rem; color: var(--clr-espresso); margin-bottom: 6px;">Bespoke Craftsmanship</h3>
+            <p style="font-size: 0.92rem; color: var(--clr-bark); line-height: 1.5;">
+              Intricate Indian floral carvings and custom brass inlay work performed by 3rd-generation master
+              woodworkers tailored to your home.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3); background: #FFF;">
+          <div style="aspect-ratio: 16/10; overflow: hidden; position: relative;">
+            <img src="assets/white_glove.png" alt="White Glove Delivery"
+              style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="tier-badge tier-badge--silver"
+              style="position: absolute; top: 10px; right: 10px; font-size: 0.68rem;">Complimentary 50km</span>
+          </div>
+          <div style="padding: var(--space-lg); text-align: left;">
+            <h3 style="font-size: 1.2rem; color: var(--clr-espresso); margin-bottom: 6px;">White-Glove Delivery</h3>
+            <p style="font-size: 0.92rem; color: var(--clr-bark); line-height: 1.5;">
+              Complimentary home delivery and professional white-glove installation within 50km radius of our Jaber
+              Nagar Palwal showroom.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indian Woodworking Legacy Split Banner -->
+      <div class="card"
+        style="background: linear-gradient(135deg, var(--clr-espresso) 0%, #1A1008 100%); color: var(--clr-cream); border: 2px solid var(--clr-gold); padding: var(--space-2xl); border-radius: var(--radius-lg);">
+        <div class="grid-2" style="align-items: center; gap: var(--space-2xl);">
+          <div style="position: relative;">
+            <div
+              style="aspect-ratio: 4/3; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--clr-gold-dim); box-shadow: var(--shadow-card);">
+              <img src="assets/craftsmanship.png" alt="Indian Master Artisan"
+                style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div
+              style="position: absolute; bottom: -15px; right: -15px; background: var(--clr-gold); color: var(--clr-carbon); padding: var(--space-md) var(--space-lg); border-radius: var(--radius-md); font-family: var(--font-ui); font-weight: 700; box-shadow: var(--shadow-gold);">
+              🏆 Palwal's #1 Woodcraft Brand
+            </div>
+          </div>
+
+          <div>
+            <span
+              style="font-family: var(--font-ui); color: var(--clr-gold); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: var(--space-xs);">HANDCRAFTED
+              HERITAGE</span>
+            <h3 style="color: var(--clr-cream); font-size: var(--fs-h2); margin-bottom: var(--space-md);">Master
+              Artisans of Sheesham & Teak</h3>
+            <p style="color: var(--clr-ash); font-size: 1rem; line-height: 1.7; margin-bottom: var(--space-lg);">
+              At Balaji Furnishers & Traders, we don't just sell furniture — we craft heirlooms. Every Sheesham log is
+              naturally seasoned to resist warping, and every Teak dining table is embedded with royal brass accents to
+              reflect Indian architectural royalty.
+            </p>
+
+            <div
+              style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: var(--space-md); text-align: center;">
+              <div>
+                <strong
+                  style="font-size: 1.8rem; color: var(--clr-gold); font-family: var(--font-display); display: block;">3,000+</strong>
+                <span style="font-size: 0.8rem; color: var(--clr-ash); font-family: var(--font-ui);">Happy
+                  Families</span>
+              </div>
+              <div>
+                <strong
+                  style="font-size: 1.8rem; color: var(--clr-gold); font-family: var(--font-display); display: block;">100%</strong>
+                <span style="font-size: 0.8rem; color: var(--clr-ash); font-family: var(--font-ui);">Solid Sheesham &
+                  Teak</span>
+              </div>
+              <div>
+                <strong
+                  style="font-size: 1.8rem; color: var(--clr-gold); font-family: var(--font-display); display: block;">50km</strong>
+                <span style="font-size: 0.8rem; color: var(--clr-ash); font-family: var(--font-ui);">Free White Glove
+                  Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+    <!-- ==========================================
+       5. ENQUIRY / REGISTRATION FORM
+       ========================================== -->
+    <section class="section" id="enquiry">
+      <div class="container" style="max-width: 800px;">
+        <div class="card" style="padding: var(--space-2xl); border: 2px solid var(--clr-gold);">
+          <div class="section-header" style="margin-bottom: var(--space-xl);">
+            <span class="section-header__eyebrow">VIP CONSULTATION</span>
+            <h2>Begin Your Purchase Enquiry</h2>
+            <div class="gold-divider"></div>
+            <p>Book a private showroom appointment or request pricing details on WhatsApp.</p>
+          </div>
+
+          <form id="enquiry-form">
+            <div class="grid-2">
+              <div class="form-group" id="group-name">
+                <label class="form-label" for="cust-name">Full Name *</label>
+                <input type="text" id="cust-name" class="form-input" placeholder="e.g. Rajesh Kumar" required>
+                <span class="form-error-msg" id="err-name"></span>
+              </div>
+
+              <div class="form-group" id="group-phone">
+                <label class="form-label" for="cust-phone">WhatsApp Number *</label>
+                <input type="tel" id="cust-phone" class="form-input" placeholder="10-digit number (e.g. 9896097124)"
+                  required>
+                <span class="form-error-msg" id="err-phone"></span>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="cust-product">Interested Furniture Piece *</label>
+                <select id="cust-product" class="form-select" required>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cust-location">Your Location (Palwal Area) *</label>
+                <select id="cust-location" class="form-select" required>
+                  <option value="Jaber Nagar (Near OBC Bank), Palwal">Jaber Nagar (Near OBC Bank)</option>
+                  <option value="Old Grain Market, Palwal">Old Grain Market</option>
+                  <option value="Sector 2, Palwal">Sector 2</option>
+                  <option value="NH-19 Highway Side, Palwal">NH-19 Highway Side</option>
+                  <option value="Railway Station Area, Palwal">Railway Station Area</option>
+                  <option value="New Bus Stand, Palwal">New Bus Stand</option>
+                  <option value="Civil Lines, Palwal">Civil Lines</option>
+                  <option value="Badarpur Colony, Palwal">Badarpur Colony</option>
+                  <option value="Model Town, Palwal">Model Town</option>
+                  <option value="Other Area (Palwal District)">Other Area (Palwal District)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cust-notes">Customization Requirements / Notes</label>
+              <textarea id="cust-notes" class="form-textarea" rows="3"
+                placeholder="Specify wood finish, custom sizes, or delivery timeline requests..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg btn--block" style="margin-top: var(--space-md);">
+              Submit Enquiry via WhatsApp →
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       6. STORE LOCATION MAP SECTION (REAL INTERACTIVE MAP)
+       ========================================== -->
+    <section class="map-section" id="map">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__eyebrow" style="color: var(--clr-gold);">VISIT OUR PALWAL SHOWROOM</span>
+          <h2 style="color: var(--clr-cream);">Real Location & Navigation</h2>
+          <div class="gold-divider"></div>
+          <p style="color: var(--clr-ash);">Situated conveniently near OBC Bank, Jaber Nagar, Palwal, Haryana 121102.
+          </p>
+        </div>
+
+        <div class="map-container"
+          style="padding: 0; overflow: hidden; height: 480px; border: 2px solid var(--clr-gold);">
+          <!-- Real OpenStreetMap Container -->
+          <div id="real-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
+        </div>
+
+        <div class="grid-3" style="margin-top: var(--space-xl);">
+          <div class="card" style="padding: var(--space-lg); background-color: #1A1008; color: var(--clr-linen);">
+            <h4 style="color: var(--clr-gold); margin-bottom: var(--space-xs);">📍 Showroom Address</h4>
+            <p>Near OBC Bank, Jaber Nagar, Palwal, Haryana 121102</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-lg); background-color: #1A1008; color: var(--clr-linen);">
+            <h4 style="color: var(--clr-gold); margin-bottom: var(--space-xs);">📞 Contact & WhatsApp</h4>
+            <p>Direct Phone: +91 9896097124<br>WhatsApp: +91 9896097124</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-lg); background-color: #1A1008; color: var(--clr-linen);">
+            <h4 style="color: var(--clr-gold); margin-bottom: var(--space-xs);">🗺️ Directions</h4>
+            <a href="https://maps.google.com/?q=Jaber+Nagar+OBC+Bank+Palwal+Haryana" target="_blank"
+              class="btn btn--primary btn--sm" style="margin-top: 6px;">Open in Google Maps ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       7. FOOTER
+       ========================================== -->
+    <footer
+      style="background-color: var(--clr-espresso); color: var(--clr-linen); padding: var(--space-3xl) 0 var(--space-lg) 0; border-top: 1px solid var(--clr-bark);">
+      <div class="container">
+        <div class="grid-3" style="gap: var(--space-2xl); margin-bottom: var(--space-2xl);">
+          <div>
+            <h3 style="color: var(--clr-gold); margin-bottom: var(--space-sm);">Balaji Furnishers & Traders</h3>
+            <p style="font-size: 0.95rem; color: var(--clr-ash);">
+              A legacy of master woodworking and ultra-luxury furniture in Palwal, Haryana. Bringing elegance to your
+              living space since 2009.
+            </p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--clr-gold); margin-bottom: var(--space-md); text-transform: uppercase; font-family: var(--font-ui);">
+              Quick Navigation</h4>
+            <ul
+              style="list-style: none; display: flex; flex-direction: column; gap: var(--space-xs); font-family: var(--font-ui); font-size: 0.9rem;">
+              <li><a href="#hero">Back to Top</a></li>
+              <li><a href="products.html">Furniture Collection</a></li>
+              <li><a href="#enquiry">Book Consultation</a></li>
+              <li><a href="admin.html">Private Admin Portal</a></li>
+              <li><a href="analytics.html">Analytics Dashboard</a></li>
+              <li><a href="whatsapp.html">WhatsApp Broadcast Simulator</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--clr-gold); margin-bottom: var(--space-md); text-transform: uppercase; font-family: var(--font-ui);">
+              Showroom Contact</h4>
+            <p style="font-size: 0.9rem; color: var(--clr-ash); line-height: 1.6;">
+              Near OBC Bank, Jaber Nagar,<br>
+              Palwal, Haryana 121102<br>
+              <strong>Call / WhatsApp:</strong> +91 9896097124
+            </p>
+          </div>
+        </div>
+
+        <div
+          style="border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-lg); text-align: center; font-family: var(--font-ui); font-size: 0.8rem; color: var(--clr-ash);">
+          © 2026 Balaji Furnishers & Traders. Crafted with pride in Palwal, Haryana 121102.
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==========================================
+       8. QUICK VIEW MODAL
+       ========================================== -->
+    <div class="modal-overlay" id="quick-modal">
+      <div class="modal-box">
+        <button class="modal__close" id="modal-close-btn">&times;</button>
+        <div class="modal__grid">
+          <div class="modal__media" id="modal-media">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div class="modal__content">
+            <span class="section-header__eyebrow" id="modal-category">BEDROOM</span>
+            <h3 class="modal__title" id="modal-title">Maharaja King Bed</h3>
+            <p id="modal-material" style="font-style: italic; color: var(--clr-bark); margin-bottom: var(--space-sm);">
+              Solid Sheesham Wood</p>
+
+            <div class="card__price-row" style="margin-bottom: var(--space-md);">
+              <span class="card__price" id="modal-price">₹2,85,000</span>
+              <span class="card__mrp" id="modal-mrp">₹3,40,000</span>
+            </div>
+
+            <div id="modal-tier-badge" style="margin-bottom: var(--space-md);"></div>
+
+            <p id="modal-desc" style="font-size: 0.95rem; color: var(--clr-espresso); margin-bottom: var(--space-md);">
+              Description goes here...
+            </p>
+
+            <div class="modal__spec-grid">
+              <div>
+                <span class="spec-item__label">Dimensions</span>
+                <span class="spec-item__value" id="modal-dims">78" × 72" × 54"</span>
+              </div>
+              <div>
+                <span class="spec-item__label">Lead Time</span>
+                <span class="spec-item__value" id="modal-lead">3–4 weeks</span>
+              </div>
+            </div>
+
+            <a href="#enquiry" class="btn btn--primary btn--block" id="modal-enquire-btn">Enquire for This Piece →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+       9. FLOATING WHATSAPP WIDGET
+       ========================================== -->
+    <div class="wa-widget">
+      <span class="wa-widget__tooltip">Chat with Balaji Furnishers</span>
+      <a href="https://wa.me/919896097124?text=Hello%20Balaji%20Furnishers%20%26%20Traders%2C%20I'm%20interested%20in%20your%20furniture%20collection"
+        target="_blank" class="wa-widget__btn" aria-label="WhatsApp Us">
+        <div class="wa-widget__ring"></div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Script File -->
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // 0. Initialize Real OpenStreetMap of Palwal, Haryana
+        const mapContainer = document.getElementById('real-leaflet-map');
+        if (mapContainer && typeof L !== 'undefined') {
+          // Palwal, Jaber Nagar Near OBC Bank coordinates: [28.1450, 77.3280]
+          const palwalMap = L.map('real-leaflet-map').setView([28.1450, 77.3280], 15);
+
+          // OpenStreetMap Dark/Carto Tile Layer for luxury feel
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(palwalMap);
+
+          // Add Showroom Custom Marker
+          const goldIcon = L.divIcon({
+            className: 'custom-map-icon',
+            html: `<div style="background-color:#D4AF37; width:22px; height:22px; border-radius:50%; border:3px solid #1A1008; box-shadow:0 0 15px #D4AF37;"></div>`,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11]
+          });
+
+          const marker = L.marker([28.1450, 77.3280], { icon: goldIcon }).addTo(palwalMap);
+          marker.bindPopup(`
+          <div style="font-family: sans-serif; padding: 4px;">
+            <strong style="color: #2C1B12; font-size: 1rem;">Balaji Furnishers & Traders</strong><br>
+            <span style="font-size: 0.85rem; color: #666;">Near OBC Bank, Jaber Nagar, Palwal</span><br>
+            <strong style="color: #D4AF37;">Ph: +91 9896097124</strong>
+          </div>
+        `).openPopup();
+        }
+        // 1. Populate Enquiry Dropdown
+        const enquirySelect = document.getElementById('cust-product');
+
+        function populateEnquiryDropdown() {
+          const products = LuxeWood.getProducts();
+          if (enquirySelect) {
+            enquirySelect.innerHTML = products.map(p => `
+            <option value="${p.id}">${p.name} — ${LuxeWood.formatPrice(p.price)}</option>
+          `).join('');
+          }
+        }
+
+        populateEnquiryDropdown();
+
+        // 2. Quick View Modal Logic
+        const modal = document.getElementById('quick-modal');
+        const closeBtn = document.getElementById('modal-close-btn');
+
+        function openQuickModal(prodId) {
+          const product = LuxeWood.getProductById(prodId);
+          if (!product) return;
+
+          const tier = LuxeWood.calculateTier(product.price);
+          const hasImg = LuxeWood.getProductImage(product);
+
+          document.getElementById('modal-media').innerHTML = hasImg ? `<img src="${hasImg}" alt="${product.name}">` : `<div style="font-size: 6rem;">${product.images[0] || '🪑'}</div>`;
+          document.getElementById('modal-category').innerText = product.category;
+          document.getElementById('modal-title').innerText = product.name;
+          document.getElementById('modal-material').innerText = product.material + ' · ' + product.finish;
+          document.getElementById('modal-price').innerText = LuxeWood.formatPrice(product.price);
+          document.getElementById('modal-mrp').innerText = product.mrp > product.price ? LuxeWood.formatPrice(product.mrp) : '';
+          document.getElementById('modal-desc').innerText = product.description;
+          document.getElementById('modal-dims').innerText = `${product.dimensions.L} × ${product.dimensions.W} × ${product.dimensions.H}`;
+          document.getElementById('modal-lead').innerText = product.leadTime;
+
+          document.getElementById('modal-tier-badge').innerHTML = `
+          <span class="tier-badge tier-badge--${tier}">${tier} Tier Piece</span>
+        `;
+
+          document.getElementById('modal-enquire-btn').onclick = () => {
+            modal.classList.remove('open');
+            enquirySelect.value = product.id;
+          };
+
+          modal.classList.add('open');
+        }
+
+        closeBtn.onclick = () => modal.classList.remove('open');
+        modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('open'); };
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('open'); });
+
+        // 3. Enquiry Form Submission
+        const form = document.getElementById('enquiry-form');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById('cust-name').value.trim();
+          const phone = document.getElementById('cust-phone').value.trim();
+          const productId = document.getElementById('cust-product').value;
+          const location = document.getElementById('cust-location').value;
+          const notes = document.getElementById('cust-notes').value.trim();
+
+          // Phone validation
+          const cleanPhone = phone.replace(/\D/g, '');
+          if (cleanPhone.length !== 10) {
+            LuxeWood.toast("Please enter a valid 10-digit mobile number.", "error");
+            return;
+          }
+
+          try {
+            const newCust = LuxeWood.addCustomer({
+              name,
+              phone: cleanPhone,
+              productId,
+              location,
+              notes
+            });
+
+            LuxeWood.toast(`✅ Enquiry received for ${newCust.productName}! Our team will contact you on WhatsApp (+91 9896097124) shortly.`, "success", 5000);
+            form.reset();
+          } catch (err) {
+            LuxeWood.toast(err.message, "error");
+          }
+        });
+
+        // 4. Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileToggle.onclick = () => {
+          mobileToggle.classList.toggle('open');
+          mobileMenu.classList.toggle('open');
+        };
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+          link.onclick = () => {
+            mobileToggle.classList.remove('open');
+            mobileMenu.classList.remove('open');
+          };
+        });
+
+        // 5. Check URL parameters (e.g. ?product=prod_1710900001)
+        const urlParams = new URLSearchParams(window.location.search);
+        const paramProd = urlParams.get('product');
+        if (paramProd) openQuickModal(paramProd);
+
+      });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Balaji Furnishers & Traders (LuxeWood) — whatsapp.html
+    Role: WhatsApp Bulk Broadcast Simulator Terminal Engine
+    Dependencies: style.css, script.js
+    Phase: 2 — Step 6
+    Last Updated: 2026-07-18
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Broadcast Engine — Balaji Furnishers & Traders</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .terminal-box {
+      background-color: var(--clr-terminal-bg);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-mono);
+      color: var(--clr-terminal-txt);
+      padding: var(--space-lg);
+      min-height: 480px;
+      max-height: 540px;
+      overflow-y: auto;
+      border: 1px solid #222;
+      box-shadow: inset 0 0 30px rgba(0, 255, 65, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-dot--red { background-color: #FF5F56; }
+    .terminal-dot--yellow { background-color: #FFBD2E; }
+    .terminal-dot--green { background-color: #27C93F; }
+
+    .terminal-log {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .t-success { color: var(--clr-terminal-txt); }
+    .t-info { color: #00BFFF; }
+    .t-gold { color: var(--clr-gold); }
+    .t-dim { color: #666; }
+    .t-warn { color: #FFBD2E; }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background-color: var(--clr-terminal-txt);
+      vertical-align: middle;
+      animation: blink-cursor 1s infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">
+        <a href="index.html" class="nav-logo">
+          <span class="nav-logo__title">Balaji Broadcast</span>
+          <span class="nav-logo__subtitle">WhatsApp Terminal</span>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="admin.html">📊 Dashboard</a></li>
+        <li><a href="admin.html#vouchers">🎁 Gift Vouchers Won</a></li>
+        <li><a href="admin.html#products">📦 Product Inventory</a></li>
+        <li><a href="admin.html#customers">📋 Customer Logs</a></li>
+        <li><a href="analytics.html">📈 Customer Analytics</a></li>
+        <li><a href="whatsapp.html" class="active">📡 WhatsApp Broadcast</a></li>
+        <li style="margin-top: var(--space-xl); border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-md);"></li>
+        <li><a href="index.html" target="_blank">🌐 View Client Site ↗</a></li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <h2>WhatsApp Bulk Broadcast Engine</h2>
+          <p style="font-size: 0.88rem; color: var(--clr-ash);">Targeted Tier Campaign Simulator (Cloud API Protocol)</p>
+        </div>
+      </div>
+
+      <!-- GRID LAYOUT -->
+      <div class="grid-2" style="gap: var(--space-xl);">
+        <!-- LEFT PANEL: CAMPAIGN CONFIG -->
+        <div class="card" style="padding: var(--space-xl);">
+          <h3 style="margin-bottom: var(--space-md);">Campaign Parameters</h3>
+
+          <!-- Step 1: Target Audience -->
+          <div class="form-group">
+            <label class="form-label" for="tier-select">Target Customer Tier Segment *</label>
+            <select id="tier-select" class="form-select">
+              <option value="">— Select Target Tier —</option>
+              <option value="all">All Registered Customers (Silver + Gold + Diamond)</option>
+              <option value="silver">⬜ Silver Tier (< ₹1,00,000)</option>
+              <option value="gold">🌟 Gold Tier (₹1,00,000 – ₹2,00,000)</option>
+              <option value="diamond">💎 Diamond Ultra-Luxury Elite (> ₹2,00,000)</option>
+            </select>
+          </div>
+
+          <!-- Audience Preview -->
+          <div id="audience-preview" style="background-color: var(--clr-smoke); padding: var(--space-md); border-radius: var(--radius-md); font-size: 0.85rem; margin-bottom: var(--space-md); display: none;">
+            <strong>Target Audience Selected:</strong> <span id="audience-count">0</span> Customers
+            <div id="audience-list" style="margin-top: 4px; color: var(--clr-bark);"></div>
+          </div>
+
+          <!-- Step 2: Message Template -->
+          <div class="form-group">
+            <label class="form-label" for="msg-template">Message Template *</label>
+            <textarea id="msg-template" class="form-textarea" rows="6">Dear [Customer Name],
+
+Greetings from Balaji Furnishers & Traders (Near OBC Bank, Jaber Nagar, Palwal)! 🪵✨
+
+We are pleased to offer exclusive priority access to our newly arrived handcrafted Sheesham & Teak furniture series tailored for [Tier Label] members.
+
+Visit our Palwal showroom today or reply to this WhatsApp to request a private video catalog.
+
+Call us: +91 9896097124
+— Balaji Furnishers Team</textarea>
+          </div>
+
+          <!-- Clickable Variable Chips -->
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--space-md);">
+            <button class="btn btn--outline btn--sm var-chip" data-var="[Customer Name]">+ Name</button>
+            <button class="btn btn--outline btn--sm var-chip" data-var="[Product Name]">+ Product</button>
+            <button class="btn btn--outline btn--sm var-chip" data-var="[Tier Label]">+ Tier</button>
+            <button class="btn btn--outline btn--sm var-chip" data-var="[Date]">+ Date</button>
+          </div>
+
+          <div style="font-size: 0.78rem; color: var(--clr-ash); margin-bottom: var(--space-lg); text-align: right;" id="char-count">
+            280 / 1024 characters
+          </div>
+
+          <!-- Launch Button -->
+          <button class="btn btn--primary btn--lg btn--block" id="btn-launch-broadcast" disabled>
+            📡 Launch Broadcast Engine
+          </button>
+        </div>
+
+        <!-- RIGHT PANEL: TERMINAL SIMULATOR -->
+        <div>
+          <!-- Progress Bar -->
+          <div style="margin-bottom: var(--space-sm); display: flex; align-items: center; justify-content: space-between; font-family: var(--font-ui); font-size: 0.85rem;">
+            <span>Engine Execution Status: <strong id="status-text">Idle</strong></span>
+            <span id="progress-text" class="mono-text">0 / 0</span>
+          </div>
+          <div class="bar-outer" style="margin-bottom: var(--space-md);">
+            <div class="bar-inner bar-inner--gold" id="broadcast-progress" style="width: 0%;"></div>
+          </div>
+
+          <!-- Terminal Box -->
+          <div class="terminal-box" id="terminal-box">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="terminal-dot terminal-dot--red"></span>
+                <span class="terminal-dot terminal-dot--yellow"></span>
+                <span class="terminal-dot terminal-dot--green"></span>
+              </div>
+              <span>Balaji Broadcast Terminal v2.0</span>
+            </div>
+
+            <div class="terminal-log" id="terminal-log">
+              <span class="t-dim">> Balaji WhatsApp Cloud API Engine v2.0 READY</span>
+              <span class="t-dim">> Handshake: ✓ VERIFIED  |  Region: IN-HR-PALWAL</span>
+              <span class="t-dim">> Database: ✓ Connected  |  Sender: +919896097124</span>
+              <span class="t-gold">> Select a target tier segment and click Launch...</span>
+            </div>
+            <div style="margin-top: auto;"><span class="cursor"></span></div>
+          </div>
+
+          <!-- Post Campaign Actions -->
+          <div class="flex" style="gap: var(--space-md); margin-top: var(--space-md); display: none;" id="post-campaign-actions">
+            <button class="btn btn--outline btn--sm" id="btn-export-log">📋 Export Terminal Log (.txt)</button>
+            <button class="btn btn--dark btn--sm" id="btn-new-campaign">🔄 Reset Terminal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BROADCAST HISTORY LOG TABLE -->
+      <div class="card" style="padding: var(--space-xl); margin-top: var(--space-2xl);">
+        <h3>Campaign History Log</h3>
+        <div class="table-responsive" style="margin-top: var(--space-md);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Target Tier</th>
+                <th>Total Sent</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tierSelect = document.getElementById('tier-select');
+      const audiencePreview = document.getElementById('audience-preview');
+      const audienceCount = document.getElementById('audience-count');
+      const audienceList = document.getElementById('audience-list');
+      const launchBtn = document.getElementById('btn-launch-broadcast');
+      const msgArea = document.getElementById('msg-template');
+      const charCount = document.getElementById('char-count');
+
+      const terminalLog = document.getElementById('terminal-log');
+      const terminalBox = document.getElementById('terminal-box');
+      const progressBar = document.getElementById('broadcast-progress');
+      const progressText = document.getElementById('progress-text');
+      const statusText = document.getElementById('status-text');
+      const postActions = document.getElementById('post-campaign-actions');
+
+      let currentAudience = [];
+      let fullLogText = "";
+
+      // 1. URL Parameter Pre-selection (e.g. ?tier=diamond)
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramTier = urlParams.get('tier');
+      if (paramTier) {
+        tierSelect.value = paramTier;
+        updateAudience();
+      }
+
+      // 2. Audience Selection
+      tierSelect.onchange = updateAudience;
+
+      function updateAudience() {
+        const val = tierSelect.value;
+        if (!val) {
+          audiencePreview.style.display = 'none';
+          launchBtn.disabled = true;
+          currentAudience = [];
+          return;
+        }
+
+        currentAudience = LuxeWood.getCustomersByTier(val);
+        audienceCount.innerText = currentAudience.length;
+        
+        const sample = currentAudience.slice(0, 4).map(c => c.name).join(', ');
+        audienceList.innerText = sample ? `Recipients: ${sample}${currentAudience.length > 4 ? ` +${currentAudience.length - 4} more` : ''}` : 'No customers found in this tier.';
+
+        audiencePreview.style.display = 'block';
+        launchBtn.disabled = (currentAudience.length === 0 || !msgArea.value.trim());
+      }
+
+      // 3. Variable Insertion Chips
+      document.querySelectorAll('.var-chip').forEach(btn => {
+        btn.onclick = () => {
+          const varTag = btn.dataset.var;
+          const pos = msgArea.selectionStart || msgArea.value.length;
+          msgArea.value = msgArea.value.slice(0, pos) + varTag + msgArea.value.slice(pos);
+          updateCharCount();
+          msgArea.focus();
+        };
+      });
+
+      msgArea.oninput = updateCharCount;
+      function updateCharCount() {
+        charCount.innerText = `${msgArea.value.length} / 1024 characters`;
+        launchBtn.disabled = (currentAudience.length === 0 || !msgArea.value.trim());
+      }
+
+      // 4. Terminal Simulation Execution
+      launchBtn.onclick = () => {
+        if (currentAudience.length === 0) return;
+
+        launchBtn.disabled = true;
+        tierSelect.disabled = true;
+        msgArea.disabled = true;
+        statusText.innerText = "Broadcasting...";
+
+        terminalLog.innerHTML = "";
+        fullLogText = "";
+
+        function logLine(text, cssClass = '') {
+          const span = document.createElement('span');
+          if (cssClass) span.className = cssClass;
+          span.innerText = text;
+          terminalLog.appendChild(span);
+          terminalBox.scrollTop = terminalBox.scrollHeight;
+          fullLogText += text + "\n";
+        }
+
+        logLine(`> [${new Date().toLocaleTimeString()}] INITIATING WHATSAPP BROADCAST...`, 't-info');
+        logLine(`> Target Segment: ${tierSelect.value.toUpperCase()} (${currentAudience.length} Recipients)`, 't-gold');
+        logLine(`> Sender ID: Balaji Furnishers & Traders (+919896097124)`, 't-dim');
+        logLine(`> ----------------------------------------------------`, 't-dim');
+
+        let index = 0;
+        progressBar.style.width = '0%';
+
+        function processNext() {
+          if (index >= currentAudience.length) {
+            // Complete
+            logLine(`> ----------------------------------------------------`, 't-dim');
+            logLine(`> ✅ BROADCAST COMPLETE! Sent: ${currentAudience.length} | Failed: 0`, 't-success');
+            logLine(`> All messages successfully delivered to Palwal recipients.`, 't-gold');
+            
+            statusText.innerText = "Finished";
+            progressBar.style.width = '100%';
+            progressText.innerText = `${currentAudience.length} / ${currentAudience.length}`;
+            postActions.style.display = 'flex';
+
+            // Save to Campaign History
+            saveCampaignHistory(tierSelect.value, currentAudience.length);
+            return;
+          }
+
+          const customer = currentAudience[index];
+          const personalized = msgArea.value
+            .replace(/\[Customer Name\]/g, customer.name)
+            .replace(/\[Product Name\]/g, customer.productName)
+            .replace(/\[Tier Label\]/g, customer.tier.toUpperCase())
+            .replace(/\[Date\]/g, new Date().toLocaleDateString('en-IN'));
+
+          logLine(`> QUEUED [+91 ${customer.phone}] → ${customer.name} (${customer.location})`, 't-info');
+          logLine(`  Template injected: "${personalized.slice(0, 50)}..."`, 't-dim');
+
+          setTimeout(() => {
+            logLine(`  ✓ SENT to +91${customer.phone}  ✓ DELIVERED`, 't-success');
+            index++;
+            const pct = Math.round((index / currentAudience.length) * 100);
+            progressBar.style.width = `${pct}%`;
+            progressText.innerText = `${index} / ${currentAudience.length}`;
+
+            setTimeout(processNext, 600);
+          }, 400);
+        }
+
+        setTimeout(processNext, 800);
+      };
+
+      // 5. Campaign History Storage
+      function saveCampaignHistory(tier, count) {
+        let history = JSON.parse(localStorage.getItem('luxewood_broadcasts') || '[]');
+        history.unshift({
+          timestamp: new Date().toISOString(),
+          tier: tier.toUpperCase(),
+          sent: count,
+          status: 'SUCCESS'
+        });
+        localStorage.setItem('luxewood_broadcasts', JSON.stringify(history));
+        renderHistory();
+      }
+
+      function renderHistory() {
+        let history = JSON.parse(localStorage.getItem('luxewood_broadcasts') || '[]');
+        const tbody = document.getElementById('history-table-body');
+        if (history.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--clr-ash);">No previous broadcast campaigns found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = history.map(h => `
+          <tr>
+            <td>${LuxeWood.formatDate(h.timestamp)}</td>
+            <td><span class="tier-badge tier-badge--gold">${h.tier}</span></td>
+            <td><strong>${h.sent} Customers</strong></td>
+            <td><span style="color: var(--clr-success); font-weight: 600;">✅ ${h.status}</span></td>
+            <td><button class="btn btn--outline btn--sm" onclick="alert('Campaign details logged to terminal.')">Details</button></td>
+          </tr>
+        `).join('');
+      }
+
+      // 6. Reset Terminal
+      document.getElementById('btn-new-campaign').onclick = () => {
+        tierSelect.disabled = false;
+        msgArea.disabled = false;
+        tierSelect.value = "";
+        updateAudience();
+        postActions.style.display = 'none';
+        statusText.innerText = "Idle";
+        progressBar.style.width = '0%';
+        progressText.innerText = "0 / 0";
+        terminalLog.innerHTML = `<span class="t-dim">> Balaji WhatsApp Cloud API Engine v2.0 READY</span><span class="t-gold">> Select a target tier segment...</span>`;
+      };
+
+      // 7. Export Log Text File
+      document.getElementById('btn-export-log').onclick = () => {
+        const blob = new Blob([fullLogText], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `balaji_whatsapp_log_${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+        LuxeWood.toast("📋 Broadcast terminal log exported!", "success");
+      };
+
+      // Init History
+      renderHistory();
+    });
+  </script>
+</body>
+</html>

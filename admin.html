@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Balaji Furnishers & Traders (LuxeWood) — admin.html
+    Role: Private Admin Control Panel — Product CRUD & Customer Enquiry Logs
+    Dependencies: style.css, script.js
+    Phase: 1 — Step 4
+    Last Updated: 2026-07-18
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal — Balaji Furnishers & Traders</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <!-- ==========================================
+         SIDEBAR NAVIGATION
+         ========================================== -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">
+        <a href="index.html" class="nav-logo">
+          <span class="nav-logo__title">Balaji Admin</span>
+          <span class="nav-logo__subtitle">Management Console</span>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="#dashboard" class="sidebar-link active" data-target="view-dashboard">📊 Dashboard</a></li>
+        <li><a href="#vouchers" class="sidebar-link" data-target="view-vouchers">🎁 Gift Vouchers Won</a></li>
+        <li><a href="#products" class="sidebar-link" data-target="view-products">📦 Product Inventory</a></li>
+        <li><a href="#add-product" class="sidebar-link" data-target="view-add-product">➕ Add New Product</a></li>
+        <li><a href="#customers" class="sidebar-link" data-target="view-logs">📋 Customer Logs</a></li>
+        <li><a href="#walkin" class="sidebar-link" data-target="view-walkin">🏬 Walk-in Entry (Map Pin)</a></li>
+        <li style="margin-top: var(--space-xl); border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-md);"></li>
+        <li><a href="index.html" target="_blank">🌐 View Client Site ↗</a></li>
+        <li><a href="analytics.html">📈 Customer Analytics</a></li>
+        <li><a href="whatsapp.html">📡 WhatsApp Broadcast</a></li>
+      </ul>
+    </aside>
+
+    <!-- ==========================================
+         MAIN CONTENT AREA
+         ========================================== -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <div class="admin-topbar">
+        <div>
+          <h2 id="page-title">Admin Overview</h2>
+          <p style="font-size: 0.88rem; color: var(--clr-ash);">Balaji Furnishers & Traders · Palwal Showroom System</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: var(--space-md);">
+          <div style="text-align: right;">
+            <strong style="display: block; font-size: 0.95rem;">Ankit Sharma</strong>
+            <span class="tier-badge tier-badge--gold" style="font-size: 0.65rem;">Super Admin</span>
+          </div>
+          <div style="width: 42px; height: 42px; border-radius: 50%; background-color: var(--clr-gold); color: var(--clr-carbon); font-weight: 700; display: flex; align-items: center; justify-content: center;">AS</div>
+        </div>
+      </div>
+
+      <!-- VIEW 1: DASHBOARD OVERVIEW -->
+      <section id="view-dashboard" class="admin-view active">
+        <!-- 4 Stat Cards -->
+        <div class="stat-grid">
+          <div class="stat-card" style="border-top-color: var(--clr-espresso);">
+            <span class="stat-card__number" id="stat-products">0</span>
+            <span class="stat-card__label">Total Products</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: var(--clr-gold);">
+            <span class="stat-card__number" id="stat-customers">0</span>
+            <span class="stat-card__label">Total Enquiries</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: var(--clr-success);">
+            <span class="stat-card__number" id="stat-revenue">₹0</span>
+            <span class="stat-card__label">Estimated Value</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: #005577;">
+            <span class="stat-card__number" id="stat-diamond">0</span>
+            <span class="stat-card__label">Diamond Clients</span>
+          </div>
+        </div>
+
+        <!-- Recent Activity Table -->
+        <div class="card" style="padding: var(--space-xl);">
+          <h3 style="margin-bottom: var(--space-md);">Recent Customer Enquiries</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Mobile</th>
+                  <th>Interested Product</th>
+                  <th>Price</th>
+                  <th>Location</th>
+                  <th>Tier</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recent-logs-body">
+                <!-- JS Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: PRODUCT LIST -->
+      <section id="view-products" class="admin-view" style="display: none;">
+        <div class="flex-between" style="margin-bottom: var(--space-lg);">
+          <input type="text" id="search-products" class="form-input" placeholder="🔍 Search products by name or category..." style="max-width: 400px;">
+          <button class="btn btn--primary" id="btn-switch-add">+ Add New Product</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Selling Price</th>
+                <th>MRP</th>
+                <th>Calculated Tier</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 3: ADD / EDIT PRODUCT FORM -->
+      <section id="view-add-product" class="admin-view" style="display: none;">
+        <div class="card" style="padding: var(--space-2xl); max-width: 800px; margin: 0 auto;">
+          <h3 id="form-title" style="margin-bottom: var(--space-lg);">Add New Showroom Product</h3>
+
+          <form id="product-form">
+            <input type="hidden" id="prod-id">
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="prod-name">Product Name *</label>
+                <input type="text" id="prod-name" class="form-input" placeholder="e.g. Imperial Maharaja Dining Chair" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prod-category">Category *</label>
+                <select id="prod-category" class="form-select" required>
+                  <option value="Bedroom">Bedroom</option>
+                  <option value="Living">Living Room</option>
+                  <option value="Dining">Dining</option>
+                  <option value="Office">Executive Office</option>
+                  <option value="Outdoor">Outdoor & Garden</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="prod-material">Primary Material *</label>
+                <input type="text" id="prod-material" class="form-input" placeholder="e.g. Solid Sheesham Wood" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prod-finish">Wood Finish</label>
+                <input type="text" id="prod-finish" class="form-input" placeholder="e.g. Natural Honey Gloss Polish">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="prod-price">Selling Price (₹) *</label>
+                <input type="number" id="prod-price" class="form-input" placeholder="e.g. 150000" min="1000" required>
+                <div style="margin-top: 6px;">
+                  <span style="font-size: 0.75rem; color: var(--clr-ash);">Live Tier Classification: </span>
+                  <span id="live-tier-badge" class="tier-badge tier-badge--silver">Silver Tier</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prod-mrp">Original MRP (₹)</label>
+                <input type="number" id="prod-mrp" class="form-input" placeholder="e.g. 180000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="prod-desc">Detailed Description *</label>
+              <textarea id="prod-desc" class="form-textarea" rows="4" placeholder="Mention wood seasoning process, carving details, and warranty terms..." required></textarea>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="prod-lead">Lead Time / Delivery</label>
+                <input type="text" id="prod-lead" class="form-input" placeholder="e.g. 2–3 weeks">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prod-badge">Promotional Badge</label>
+                <select id="prod-badge" class="form-select">
+                  <option value="">None</option>
+                  <option value="New Arrival">New Arrival</option>
+                  <option value="Bestseller">Bestseller</option>
+                  <option value="Limited Edition">Limited Edition</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex" style="gap: var(--space-md); margin-top: var(--space-lg);">
+              <button type="submit" class="btn btn--primary btn--lg" id="btn-submit-prod">Save Product to Catalog</button>
+              <button type="button" class="btn btn--dark btn--lg" id="btn-cancel-prod" style="display: none;">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- VIEW 4: CUSTOMER ENQUIRY LOGS -->
+      <section id="view-logs" class="admin-view" style="display: none;">
+        <div class="flex-between" style="margin-bottom: var(--space-lg);">
+          <div class="filter-tabs" style="margin-bottom: 0;">
+            <button class="filter-tab active" data-tier-filter="all">All Tiers</button>
+            <button class="filter-tab" data-tier-filter="silver">Silver Tier</button>
+            <button class="filter-tab" data-tier-filter="gold">Gold Tier</button>
+            <button class="filter-tab" data-tier-filter="diamond">Diamond Tier</button>
+          </div>
+
+          <button class="btn btn--primary" id="btn-export-csv">📥 Export CSV Log</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table" id="customer-logs-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Name</th>
+                <th>Phone Number</th>
+                <th>Product Purchased</th>
+                <th>Value</th>
+                <th>Location</th>
+                <th>Tier Badge</th>
+                <th>Enquiry Date</th>
+              </tr>
+            </thead>
+            <tbody id="customer-logs-body">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 5: WALK-IN SHOWROOM ENTRY & MAP PIN -->
+      <section id="view-walkin" class="admin-view" style="display: none;">
+        <div class="card" style="padding: var(--space-2xl); max-width: 900px; margin: 0 auto; border: 2px solid var(--clr-gold);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-lg);">
+            <div>
+              <span class="section-header__eyebrow" style="color: var(--clr-gold);">OFFLINE SHOWROOM REGISTRATION</span>
+              <h2>Walk-in Customer Entry & Map Pin</h2>
+              <p style="color: var(--clr-bark); font-size: 0.92rem;">Register offline showroom visitors, set exact map pin location, record purchased products & save for future marketing campaigns.</p>
+            </div>
+            <span class="tier-badge tier-badge--gold" style="font-size: 0.8rem;">CRM & Location System</span>
+          </div>
+
+          <form id="walkin-form">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="walkin-name">Customer Full Name *</label>
+                <input type="text" id="walkin-name" class="form-input" placeholder="e.g. Rajesh Kumar" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="walkin-phone">WhatsApp / Mobile Number *</label>
+                <input type="tel" id="walkin-phone" class="form-input" placeholder="10-digit mobile number (e.g. 9896097124)" required>
+              </div>
+            </div>
+
+            <!-- Product Search Bar & Selection -->
+            <div class="form-group" style="position: relative;">
+              <label class="form-label" for="walkin-prod-search">Search Purchased / Interested Product *</label>
+              <input type="text" id="walkin-prod-search" class="form-input" placeholder="🔍 Type product name (e.g. Maharaja Bed, Dining Table, Sofa...)" autocomplete="off">
+              <input type="hidden" id="walkin-prod-id" required>
+
+              <!-- Live Search Dropdown -->
+              <div id="walkin-prod-results" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--clr-cream); border: 1px solid var(--clr-gold); border-radius: var(--radius-md); box-shadow: var(--shadow-card); z-index: 100; max-height: 220px; overflow-y: auto; display: none;"></div>
+            </div>
+
+            <!-- Selected Product Preview -->
+            <div id="walkin-selected-preview" style="display: none; background: var(--clr-smoke); padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid var(--clr-linen); margin-bottom: var(--space-md); align-items: center; gap: var(--space-md);">
+              <img id="walkin-preview-img" src="" style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--clr-gold);">
+              <div style="flex: 1;">
+                <strong id="walkin-preview-name" style="display: block; font-size: 1rem; color: var(--clr-espresso);">Product Name</strong>
+                <span id="walkin-preview-mat" style="font-size: 0.82rem; color: var(--clr-bark);">Material</span>
+              </div>
+              <div style="text-align: right;">
+                <span id="walkin-preview-price" style="font-weight: 700; color: var(--clr-gold); font-size: 1.1rem; display: block;">₹0</span>
+                <span id="walkin-preview-tier" class="tier-badge tier-badge--gold" style="font-size: 0.65rem;">TIER</span>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="walkin-location-preset">Palwal Showroom Location Area *</label>
+                <select id="walkin-location-preset" class="form-select" required>
+                  <option value="Jaber Nagar (Near OBC Bank), Palwal">Jaber Nagar (Near OBC Bank)</option>
+                  <option value="Old Grain Market, Palwal">Old Grain Market</option>
+                  <option value="Sector 2, Palwal">Sector 2</option>
+                  <option value="NH-19 Highway Side, Palwal">NH-19 Highway Side</option>
+                  <option value="Railway Station Area, Palwal">Railway Station Area</option>
+                  <option value="New Bus Stand, Palwal">New Bus Stand</option>
+                  <option value="Civil Lines, Palwal">Civil Lines</option>
+                  <option value="Badarpur Colony, Palwal">Badarpur Colony</option>
+                  <option value="Model Town, Palwal">Model Town</option>
+                  <option value="Other Area (Palwal District)">Other Area (Palwal District)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="walkin-date">Visit / Purchase Date *</label>
+                <input type="datetime-local" id="walkin-date" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="walkin-address">Detailed House / Shop Address</label>
+              <input type="text" id="walkin-address" class="form-input" placeholder="House No., Street, Near Landmark, Palwal Area...">
+            </div>
+
+            <!-- Interactive Map Pin Picker -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xs);">
+                <label class="form-label">📍 Pin Customer Location on Map (Click or Drag Marker)</label>
+                <span id="walkin-coords-display" style="font-size: 0.8rem; color: var(--clr-gold); font-family: var(--font-ui); font-weight: 600;">Pin: [28.1450, 77.3280]</span>
+              </div>
+
+              <div style="height: 320px; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--clr-gold);">
+                <div id="walkin-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="walkin-notes">Customer Notes / Marketing Preferences</label>
+              <textarea id="walkin-notes" class="form-textarea" rows="2" placeholder="Mention wood finish preference, custom sizes requested, or future buy interest..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg btn--block" style="margin-top: var(--space-md); box-shadow: var(--shadow-gold);">
+              Save Walk-in Customer Entry & Pin Location →
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- VIEW 6: WON GIFT VOUCHERS TRACKER -->
+      <section id="view-vouchers" class="admin-view" style="display: none;">
+        <!-- Vouchers Summary Cards -->
+        <div class="stat-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: var(--space-xl);">
+          <div class="stat-card" style="border-top-color: var(--clr-gold);">
+            <span class="stat-card__number" id="stat-vouchers-count">0</span>
+            <span class="stat-card__label">🎁 Total Vouchers Won</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: var(--clr-success);">
+            <span class="stat-card__number" id="stat-vouchers-value">₹0</span>
+            <span class="stat-card__label">💸 Total Gift Prize Value</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: #D4AF37;">
+            <span class="stat-card__number" id="stat-vouchers-active">0</span>
+            <span class="stat-card__label">⚡ Active / Available</span>
+          </div>
+
+          <div class="stat-card" style="border-top-color: #005577;">
+            <span class="stat-card__number" id="stat-vouchers-top">₹15,000</span>
+            <span class="stat-card__label">👑 Top Single Reward</span>
+          </div>
+        </div>
+
+        <div class="card" style="padding: var(--space-xl);">
+          <div class="flex-between" style="flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-lg);">
+            <input type="text" id="search-vouchers" class="form-input" placeholder="🔍 Search by customer name, phone, or voucher code..." style="max-width: 360px;">
+
+            <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+              <select id="filter-voucher-amount" class="form-select" style="max-width: 180px;">
+                <option value="all">All Gift Amounts</option>
+                <option value="2000">₹2,000 Voucher</option>
+                <option value="3500">₹3,500 Voucher</option>
+                <option value="5000">₹5,000 Voucher</option>
+                <option value="7500">₹7,500 Voucher</option>
+                <option value="10000">₹10,000 Voucher</option>
+                <option value="15000">₹15,000 Voucher</option>
+              </select>
+
+              <button class="btn btn--outline btn--sm active" data-vstatus-filter="all">All</button>
+              <button class="btn btn--outline btn--sm" data-vstatus-filter="active">Active</button>
+              <button class="btn btn--outline btn--sm" data-vstatus-filter="used">Redeemed</button>
+              <button class="btn btn--secondary btn--sm" id="btn-export-vouchers-csv">📥 Export Vouchers CSV</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Redeem Code</th>
+                  <th>Customer Details</th>
+                  <th>Won Amount</th>
+                  <th>Min Order Terms</th>
+                  <th>Customer Location</th>
+                  <th>Issued Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="vouchers-table-body">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for Voucher Customer Location Map Pin -->
+  <div class="modal-overlay" id="voucher-map-modal">
+    <div class="modal-box" style="max-width: 650px;">
+      <button class="modal__close" id="modal-close-vmap">&times;</button>
+      <h3 style="color: var(--clr-gold); margin-bottom: 4px;" id="vmap-title">Customer Location Pin</h3>
+      <p id="vmap-subtitle" style="font-size: 0.88rem; color: var(--clr-bark); margin-bottom: var(--space-md);"></p>
+      <div style="height: 380px; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--clr-gold);">
+        <div id="voucher-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Navigation Tab Switching
+      const links = document.querySelectorAll('.sidebar-link');
+      const views = document.querySelectorAll('.admin-view');
+      const pageTitle = document.getElementById('page-title');
+
+      function switchView(targetId) {
+        views.forEach(v => v.style.display = 'none');
+        links.forEach(l => l.classList.remove('active'));
+
+        const targetView = document.getElementById(targetId);
+        if (targetView) targetView.style.display = 'block';
+
+        const activeLink = document.querySelector(`[data-target="${targetId}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
+        const titleMap = {
+          'view-dashboard': 'Admin Overview',
+          'view-vouchers': 'Mystery Cash Vouchers Tracker',
+          'view-products': 'Product Inventory Management',
+          'view-add-product': 'Add / Edit Product',
+          'view-logs': 'Customer Enquiry Logs',
+          'view-walkin': 'Showroom Walk-in Customer Registration'
+        };
+        pageTitle.innerText = titleMap[targetId] || 'Admin Portal';
+
+        if (targetId === 'view-dashboard') renderDashboard();
+        if (targetId === 'view-vouchers') renderVouchersTable();
+        if (targetId === 'view-products') renderProductTable();
+        if (targetId === 'view-logs') renderCustomerLogs('all');
+        if (targetId === 'view-walkin') {
+          setTimeout(initWalkinMap, 100);
+          setDefaultWalkinDate();
+        }
+      }
+
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          switchView(link.dataset.target);
+        });
+      });
+
+      document.getElementById('btn-switch-add').onclick = () => {
+        resetProductForm();
+        switchView('view-add-product');
+      };
+
+      // 2. Render Dashboard
+      function renderDashboard() {
+        const products = LuxeWood.getProducts();
+        const customers = LuxeWood.getCustomers();
+        const stats = LuxeWood.getTierStats();
+
+        document.getElementById('stat-products').innerText = products.length;
+        document.getElementById('stat-customers').innerText = customers.length;
+        document.getElementById('stat-revenue').innerText = LuxeWood.formatPrice(stats.total.revenue);
+        document.getElementById('stat-diamond').innerText = stats.diamond.count;
+
+        const recent = customers.slice(0, 5);
+        document.getElementById('recent-logs-body').innerHTML = recent.map(c => `
+          <tr>
+            <td><strong>${c.name}</strong></td>
+            <td>+91 ${c.phone}</td>
+            <td>${c.productName}</td>
+            <td><strong>${LuxeWood.formatPrice(c.productPrice)}</strong></td>
+            <td>${c.location}</td>
+            <td><span class="tier-badge tier-badge--${c.tier}">${c.tier}</span></td>
+            <td>${LuxeWood.formatDate(c.enquiryDate)}</td>
+          </tr>
+        `).join('');
+      }
+
+      // 3. Render Product Table
+      function renderProductTable(filterQuery = '') {
+        const products = LuxeWood.getProducts();
+        const query = filterQuery.toLowerCase().trim();
+        const filtered = products.filter(p => 
+          p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
+        );
+
+        const tbody = document.getElementById('products-table-body');
+        tbody.innerHTML = filtered.map((p, idx) => {
+          const tier = LuxeWood.calculateTier(p.price);
+          return `
+            <tr>
+              <td>${idx + 1}</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  ${LuxeWood.getProductImage(p) ? `<img src="${LuxeWood.getProductImage(p)}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px; border: 1px solid var(--clr-gold);">` : ''}
+                  <strong>${p.name}</strong>
+                </div>
+              </td>
+              <td>${p.category}</td>
+              <td><strong>${LuxeWood.formatPrice(p.price)}</strong></td>
+              <td>${LuxeWood.formatPrice(p.mrp)}</td>
+              <td><span class="tier-badge tier-badge--${tier}">${tier}</span></td>
+              <td>${p.inStock ? '✅ In Stock' : '❌ Out of Stock'}</td>
+              <td>
+                <button class="btn btn--outline btn--sm edit-prod-btn" data-id="${p.id}">✏️ Edit</button>
+                <button class="btn btn--dark btn--sm delete-prod-btn" data-id="${p.id}">🗑️ Delete</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.edit-prod-btn').forEach(btn => {
+          btn.onclick = () => editProduct(btn.dataset.id);
+        });
+
+        document.querySelectorAll('.delete-prod-btn').forEach(btn => {
+          btn.onclick = () => {
+            if (confirm("Are you sure you want to delete this product?")) {
+              LuxeWood.deleteProduct(btn.dataset.id);
+              LuxeWood.toast("Product deleted successfully.", "info");
+              renderProductTable();
+            }
+          };
+        });
+      }
+
+      document.getElementById('search-products').oninput = (e) => {
+        renderProductTable(e.target.value);
+      };
+
+      // 4. Live Tier Preview in Form
+      const priceInput = document.getElementById('prod-price');
+      const liveTierBadge = document.getElementById('live-tier-badge');
+
+      priceInput.oninput = () => {
+        const val = Number(priceInput.value) || 0;
+        const tier = LuxeWood.calculateTier(val);
+        liveTierBadge.className = `tier-badge tier-badge--${tier}`;
+        liveTierBadge.innerText = `${tier.toUpperCase()} TIER`;
+      };
+
+      // 5. Product Form Handler (Add & Edit)
+      const form = document.getElementById('product-form');
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('prod-id').value;
+        const name = document.getElementById('prod-name').value;
+        const category = document.getElementById('prod-category').value;
+        const material = document.getElementById('prod-material').value;
+        const finish = document.getElementById('prod-finish').value;
+        const price = Number(document.getElementById('prod-price').value);
+        const mrp = Number(document.getElementById('prod-mrp').value) || price;
+        const description = document.getElementById('prod-desc').value;
+        const leadTime = document.getElementById('prod-lead').value;
+        const badge = document.getElementById('prod-badge').value;
+
+        try {
+          if (id) {
+            LuxeWood.updateProduct(id, { name, category, material, finish, price, mrp, description, leadTime, badge });
+            LuxeWood.toast("✅ Product updated successfully!", "success");
+          } else {
+            LuxeWood.addProduct({ name, category, material, finish, price, mrp, description, leadTime, badge });
+            LuxeWood.toast("✅ Product added to catalog!", "success");
+          }
+          resetProductForm();
+          switchView('view-products');
+        } catch (err) {
+          LuxeWood.toast(err.message, "error");
+        }
+      };
+
+      function editProduct(id) {
+        const prod = LuxeWood.getProductById(id);
+        if (!prod) return;
+
+        document.getElementById('form-title').innerText = "Edit Showroom Product";
+        document.getElementById('prod-id').value = prod.id;
+        document.getElementById('prod-name').value = prod.name;
+        document.getElementById('prod-category').value = prod.category;
+        document.getElementById('prod-material').value = prod.material;
+        document.getElementById('prod-finish').value = prod.finish || '';
+        document.getElementById('prod-price').value = prod.price;
+        document.getElementById('prod-mrp').value = prod.mrp || prod.price;
+        document.getElementById('prod-desc').value = prod.description;
+        document.getElementById('prod-lead').value = prod.leadTime || '';
+        document.getElementById('prod-badge').value = prod.badge || '';
+
+        priceInput.oninput();
+        document.getElementById('btn-submit-prod').innerText = "Update Product";
+        document.getElementById('btn-cancel-prod').style.display = "inline-flex";
+
+        switchView('view-add-product');
+      }
+
+      function resetProductForm() {
+        form.reset();
+        document.getElementById('form-title').innerText = "Add New Showroom Product";
+        document.getElementById('prod-id').value = "";
+        document.getElementById('btn-submit-prod').innerText = "Save Product to Catalog";
+        document.getElementById('btn-cancel-prod').style.display = "none";
+        liveTierBadge.className = "tier-badge tier-badge--silver";
+        liveTierBadge.innerText = "SILVER TIER";
+      }
+
+      document.getElementById('btn-cancel-prod').onclick = () => {
+        resetProductForm();
+        switchView('view-products');
+      };
+
+      // 6. Customer Enquiry Logs & Filter
+      function renderCustomerLogs(tierFilter = 'all') {
+        const customers = LuxeWood.getCustomersByTier(tierFilter);
+        const tbody = document.getElementById('customer-logs-body');
+
+        tbody.innerHTML = customers.map((c, idx) => `
+          <tr>
+            <td>${idx + 1}</td>
+            <td><strong>${c.name}</strong></td>
+            <td>+91 ${c.phone}</td>
+            <td>${c.productName}</td>
+            <td><strong>${LuxeWood.formatPrice(c.productPrice)}</strong></td>
+            <td>${c.location}</td>
+            <td><span class="tier-badge tier-badge--${c.tier}">${c.tier}</span></td>
+            <td>${LuxeWood.formatDate(c.enquiryDate)}</td>
+          </tr>
+        `).join('');
+      }
+
+      document.querySelectorAll('[data-tier-filter]').forEach(btn => {
+        btn.onclick = (e) => {
+          document.querySelectorAll('[data-tier-filter]').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          renderCustomerLogs(e.target.dataset.tierFilter);
+        };
+      });
+
+      // 7. CSV Export
+      document.getElementById('btn-export-csv').onclick = () => {
+        const customers = LuxeWood.getCustomers();
+        let csvContent = "data:text/csv;charset=utf-8,ID,Name,Phone,Product,Price,Location,Tier,EnquiryDate\n";
+
+        customers.forEach(c => {
+          const row = `"${c.id}","${c.name}","+91${c.phone}","${c.productName}",${c.productPrice},"${c.location}","${c.tier}","${c.enquiryDate}"`;
+          csvContent += row + "\n";
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `balaji_customer_logs_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        LuxeWood.toast("📥 Customer log CSV downloaded!", "success");
+      };
+
+      // 8. Walk-in Showroom Entry & Map Pin Logic
+      const walkinProdSearch = document.getElementById('walkin-prod-search');
+      const walkinProdResults = document.getElementById('walkin-prod-results');
+      const walkinProdId = document.getElementById('walkin-prod-id');
+      const walkinPreview = document.getElementById('walkin-selected-preview');
+
+      function setDefaultWalkinDate() {
+        const dateInput = document.getElementById('walkin-date');
+        if (dateInput && !dateInput.value) {
+          const now = new Date();
+          now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+          dateInput.value = now.toISOString().slice(0, 16);
+        }
+      }
+
+      walkinProdSearch.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        if (!query) {
+          walkinProdResults.style.display = 'none';
+          return;
+        }
+
+        const products = LuxeWood.getProducts();
+        const filtered = products.filter(p => 
+          p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.material.toLowerCase().includes(query)
+        );
+
+        if (filtered.length === 0) {
+          walkinProdResults.innerHTML = `<div style="padding: 10px; font-size: 0.88rem; color: var(--clr-bark); text-align: center;">No matching products found</div>`;
+        } else {
+          walkinProdResults.innerHTML = filtered.map(p => {
+            const img = LuxeWood.getProductImage(p);
+            return `
+              <div class="walkin-prod-item" data-id="${p.id}" style="display: flex; align-items: center; gap: 10px; padding: 8px var(--space-md); cursor: pointer; border-bottom: 1px solid var(--clr-linen);">
+                ${img ? `<img src="${img}" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;">` : '🪑'}
+                <div style="flex: 1;">
+                  <strong style="font-size: 0.9rem; display: block; color: var(--clr-espresso);">${p.name}</strong>
+                  <span style="font-size: 0.78rem; color: var(--clr-bark);">${p.category} · ${p.material}</span>
+                </div>
+                <strong style="color: var(--clr-gold); font-size: 0.95rem;">${LuxeWood.formatPrice(p.price)}</strong>
+              </div>
+            `;
+          }).join('');
+        }
+
+        walkinProdResults.style.display = 'block';
+
+        document.querySelectorAll('.walkin-prod-item').forEach(item => {
+          item.onclick = () => {
+            const prodId = item.dataset.id;
+            selectWalkinProduct(prodId);
+          };
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!walkinProdSearch.contains(e.target) && !walkinProdResults.contains(e.target)) {
+          walkinProdResults.style.display = 'none';
+        }
+      });
+
+      function selectWalkinProduct(prodId) {
+        const prod = LuxeWood.getProductById(prodId);
+        if (!prod) return;
+
+        walkinProdId.value = prod.id;
+        walkinProdSearch.value = prod.name;
+        walkinProdResults.style.display = 'none';
+
+        const tier = LuxeWood.calculateTier(prod.price);
+        const img = LuxeWood.getProductImage(prod);
+
+        document.getElementById('walkin-preview-img').src = img || '';
+        document.getElementById('walkin-preview-name').innerText = prod.name;
+        document.getElementById('walkin-preview-mat').innerText = prod.material + ' · ' + prod.finish;
+        document.getElementById('walkin-preview-price').innerText = LuxeWood.formatPrice(prod.price);
+        document.getElementById('walkin-preview-tier').innerText = `${tier.toUpperCase()} TIER`;
+        document.getElementById('walkin-preview-tier').className = `tier-badge tier-badge--${tier}`;
+
+        walkinPreview.style.display = 'flex';
+      }
+
+      // Interactive Map Pin Picker
+      let walkinMap, walkinMarker;
+      let selectedLatLng = { lat: 28.1450, lng: 77.3280 };
+
+      function initWalkinMap() {
+        const mapContainer = document.getElementById('walkin-leaflet-map');
+        if (!mapContainer || typeof L === 'undefined') return;
+        
+        if (walkinMap) {
+          walkinMap.invalidateSize();
+          return;
+        }
+
+        walkinMap = L.map('walkin-leaflet-map').setView([28.1450, 77.3280], 14);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap'
+        }).addTo(walkinMap);
+
+        const goldIcon = L.divIcon({
+          className: 'custom-map-icon',
+          html: `<div style="background-color:#D4AF37; width:24px; height:24px; border-radius:50%; border:3px solid #1A1008; box-shadow:0 0 15px #D4AF37; display:flex; align-items:center; justify-content:center; color:#1A1008; font-size:11px; font-weight:bold;">📍</div>`,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12]
+        });
+
+        walkinMarker = L.marker([28.1450, 77.3280], { icon: goldIcon, draggable: true }).addTo(walkinMap);
+        walkinMarker.bindPopup("<b>Customer Pin Location</b><br>Drag or click map to move").openPopup();
+
+        function updatePinDisplay(lat, lng) {
+          selectedLatLng = { lat, lng };
+          document.getElementById('walkin-coords-display').innerText = `Pin: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+        }
+
+        walkinMap.on('click', (e) => {
+          walkinMarker.setLatLng(e.latlng);
+          updatePinDisplay(e.latlng.lat, e.latlng.lng);
+        });
+
+        walkinMarker.on('dragend', () => {
+          const pt = walkinMarker.getLatLng();
+          updatePinDisplay(pt.lat, pt.lng);
+        });
+      }
+
+      // Walkin Form Submission
+      const walkinForm = document.getElementById('walkin-form');
+      walkinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('walkin-name').value.trim();
+        const phone = document.getElementById('walkin-phone').value.trim();
+        const productId = document.getElementById('walkin-prod-id').value;
+        const locationArea = document.getElementById('walkin-location-preset').value;
+        const address = document.getElementById('walkin-address').value.trim();
+        const visitDate = document.getElementById('walkin-date').value;
+        const notes = document.getElementById('walkin-notes').value.trim();
+
+        if (!productId) {
+          LuxeWood.toast("Please search and select a purchased/interested product.", "error");
+          return;
+        }
+
+        const fullLocation = address ? `${address}, ${locationArea}` : locationArea;
+
+        // Calculate relative map coords for hotspot canvas (x: 20-80, y: 20-80)
+        const relCoords = {
+          x: Math.floor(Math.min(Math.max((selectedLatLng.lng - 77.3000) * 1000, 15), 85)),
+          y: Math.floor(Math.min(Math.max((28.1600 - selectedLatLng.lat) * 1000, 15), 85))
+        };
+
+        try {
+          const newCust = LuxeWood.addCustomer({
+            name,
+            phone,
+            productId,
+            location: fullLocation,
+            address,
+            latLng: selectedLatLng,
+            coords: relCoords,
+            enquiryDate: visitDate ? new Date(visitDate).toISOString() : new Date().toISOString(),
+            notes: notes ? `[Walk-in Entry] ${notes}` : `[Walk-in Entry]`
+          });
+
+          LuxeWood.toast(`✅ Walk-in Customer ${newCust.name} saved successfully with Map Pin!`, "success", 5000);
+
+          walkinForm.reset();
+          walkinPreview.style.display = 'none';
+          walkinProdId.value = '';
+          switchView('view-logs');
+        } catch (err) {
+          LuxeWood.toast(err.message, "error");
+        }
+      });
+
+      // 9. Mystery Gift Vouchers Tracker JS Logic
+      let currentVoucherStatusFilter = 'all';
+      let voucherMap, voucherMarker;
+
+      function renderVouchersTable() {
+        const searchQuery = document.getElementById('search-vouchers')?.value.trim().toLowerCase() || '';
+        const amountFilter = document.getElementById('filter-voucher-amount')?.value || 'all';
+
+        const vouchers = LuxeWood.getVouchers();
+
+        const filtered = vouchers.filter(v => {
+          if (amountFilter !== 'all' && Number(v.amount) !== Number(amountFilter)) return false;
+          if (currentVoucherStatusFilter === 'active' && v.used) return false;
+          if (currentVoucherStatusFilter === 'used' && !v.used) return false;
+
+          if (searchQuery) {
+            const nameMatch = v.customerName ? v.customerName.toLowerCase().includes(searchQuery) : false;
+            const phoneMatch = v.customerPhone ? String(v.customerPhone).includes(searchQuery) : false;
+            const codeMatch = v.code ? v.code.toLowerCase().includes(searchQuery) : false;
+            const locMatch = v.location ? v.location.toLowerCase().includes(searchQuery) : false;
+            if (!nameMatch && !phoneMatch && !codeMatch && !locMatch) return false;
+          }
+          return true;
+        });
+
+        // Update Summary Stats
+        document.getElementById('stat-vouchers-count').innerText = vouchers.length;
+        const totalVal = vouchers.reduce((sum, v) => sum + (Number(v.amount) || 0), 0);
+        document.getElementById('stat-vouchers-value').innerText = `₹${totalVal.toLocaleString('en-IN')}`;
+        const activeCount = vouchers.filter(v => !v.used).length;
+        document.getElementById('stat-vouchers-active').innerText = activeCount;
+
+        const maxReward = vouchers.length > 0 ? Math.max(...vouchers.map(v => Number(v.amount) || 0)) : 15000;
+        document.getElementById('stat-vouchers-top').innerText = `₹${maxReward.toLocaleString('en-IN')}`;
+
+        const tbody = document.getElementById('vouchers-table-body');
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 24px; color: var(--clr-bark); font-size: 0.95rem;">No gift vouchers match your search or filter criteria.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map((v, idx) => `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <strong style="font-family: var(--font-mono); color: var(--clr-gold); font-size: 0.95rem; letter-spacing: 0.5px;">${v.code}</strong>
+                <button class="btn btn--outline btn--sm copy-vcode-btn" data-code="${v.code}" title="Copy Code" style="padding: 2px 6px; font-size: 0.75rem;">📋</button>
+              </div>
+            </td>
+            <td>
+              <strong>${v.customerName || 'Palwal VIP Guest'}</strong>
+              <span style="font-size: 0.78rem; color: var(--clr-bark); display: block;">+91 ${v.customerPhone || '9896097124'}</span>
+            </td>
+            <td>
+              <strong style="color: #2D6A4F; font-size: 1.15rem;">₹${(Number(v.amount) || 0).toLocaleString('en-IN')}</strong>
+            </td>
+            <td><span style="font-size: 0.82rem; color: var(--clr-bark);">${v.label || 'Valid on showroom orders'}</span></td>
+            <td><span style="font-size: 0.82rem;">${v.location || 'Palwal Area'}</span></td>
+            <td>${LuxeWood.formatDate(v.createdAt)}</td>
+            <td>
+              <span class="tier-badge ${v.used ? 'tier-badge--silver' : 'tier-badge--diamond'}" style="font-size: 0.72rem;">
+                ${v.used ? 'Redeemed' : 'Active'}
+              </span>
+            </td>
+            <td>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <a href="https://wa.me/91${v.customerPhone || '9896097124'}?text=Hello%20${encodeURIComponent(v.customerName || 'Customer')}%2C%20Congratulations!%20Your%20Balaji%20Furnishers%20Royal%20Cash%20Voucher%20Code%20is%3A%20${v.code}%20(Value%3A%20%E2%82%B9${(v.amount || 0).toLocaleString('en-IN')}).%20Redeem%20now%20at%20our%20Jaber%20Nagar%20Palwal%20Showroom!" target="_blank" class="btn btn--primary btn--sm" style="padding: 4px 8px; font-size: 0.78rem;">📲 WhatsApp</a>
+                <button class="btn btn--outline btn--sm view-vmap-btn" data-lat="${(v.latLng && v.latLng.lat) ? v.latLng.lat : 28.1450}" data-lng="${(v.latLng && v.latLng.lng) ? v.latLng.lng : 77.3280}" data-name="${v.customerName || 'Guest'}" data-loc="${v.location || 'Palwal'}" style="padding: 4px 8px; font-size: 0.78rem;">📍 Map Pin</button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        // Attach listeners
+        document.querySelectorAll('.copy-vcode-btn').forEach(btn => {
+          btn.onclick = () => {
+            navigator.clipboard.writeText(btn.dataset.code);
+            LuxeWood.toast(`📋 Voucher Code ${btn.dataset.code} copied!`, 'success');
+          };
+        });
+
+        document.querySelectorAll('.view-vmap-btn').forEach(btn => {
+          btn.onclick = () => {
+            openVoucherMapModal(btn.dataset.name, btn.dataset.loc, Number(btn.dataset.lat), Number(btn.dataset.lng));
+          };
+        });
+      }
+
+      // Search & Filter Listeners for Vouchers
+      document.getElementById('search-vouchers')?.addEventListener('input', () => renderVouchersTable());
+      document.getElementById('filter-voucher-amount')?.addEventListener('change', () => renderVouchersTable());
+
+      document.querySelectorAll('[data-vstatus-filter]').forEach(btn => {
+        btn.onclick = (e) => {
+          document.querySelectorAll('[data-vstatus-filter]').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          currentVoucherStatusFilter = e.target.dataset.vstatusFilter;
+          renderVouchersTable();
+        };
+      });
+
+      // Export Vouchers CSV
+      document.getElementById('btn-export-vouchers-csv')?.addEventListener('click', () => {
+        const vouchers = LuxeWood.getVouchers();
+        let csv = "data:text/csv;charset=utf-8,Code,CustomerName,Phone,Amount,MinOrderTerms,Location,CreatedAt,Status\n";
+
+        vouchers.forEach(v => {
+          const row = `"${v.code}","${v.customerName}","+91${v.customerPhone}",${v.amount},"${v.label}","${v.location}","${v.createdAt}","${v.used ? 'Redeemed' : 'Active'}"`;
+          csv += row + "\n";
+        });
+
+        const encodedUri = encodeURI(csv);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `balaji_gift_vouchers_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        LuxeWood.toast("📥 Voucher Logs CSV downloaded!", "success");
+      });
+
+      // Voucher Map Pin Modal
+      const vmapModal = document.getElementById('voucher-map-modal');
+      const vmapCloseBtn = document.getElementById('modal-close-vmap');
+
+      function openVoucherMapModal(name, location, lat, lng) {
+        document.getElementById('vmap-title').innerText = `📍 Home Location: ${name}`;
+        document.getElementById('vmap-subtitle').innerText = `Address: ${location} · Coordinates: [${lat.toFixed(4)}, ${lng.toFixed(4)}]`;
+        vmapModal.classList.add('open');
+
+        setTimeout(() => {
+          if (!voucherMap) {
+            voucherMap = L.map('voucher-leaflet-map').setView([lat, lng], 15);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+              maxZoom: 19,
+              attribution: '&copy; OpenStreetMap'
+            }).addTo(voucherMap);
+
+            const goldIcon = L.divIcon({
+              className: 'custom-map-icon',
+              html: `<div style="background-color:#D4AF37; width:26px; height:26px; border-radius:50%; border:3px solid #1A1008; box-shadow:0 0 15px #D4AF37; display:flex; align-items:center; justify-content:center; color:#1A1008; font-size:12px; font-weight:bold;">📍</div>`,
+              iconSize: [26, 26],
+              iconAnchor: [13, 13]
+            });
+
+            voucherMarker = L.marker([lat, lng], { icon: goldIcon }).addTo(voucherMap);
+          } else {
+            voucherMap.invalidateSize();
+            voucherMap.setView([lat, lng], 15);
+            voucherMarker.setLatLng([lat, lng]);
+          }
+          voucherMarker.bindPopup(`<b>${name}</b><br>${location}`).openPopup();
+        }, 200);
+      }
+
+      vmapCloseBtn.onclick = () => vmapModal.classList.remove('open');
+      vmapModal.onclick = (e) => { if (e.target === vmapModal) vmapModal.classList.remove('open'); };
+
+      // Init
+      renderDashboard();
+    });
+  </script>
+</body>
+</html>

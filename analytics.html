@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Balaji Furnishers & Traders (LuxeWood) — analytics.html
+    Role: Customer Intelligence, Tier Financial Segment & Delivery Hotspot Analytics
+    Dependencies: style.css, script.js
+    Phase: 2 — Step 5
+    Last Updated: 2026-07-18
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Intelligence & Analytics — Balaji Furnishers & Traders</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .bar-chart-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+    .bar-chart-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 120px;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .bar-outer {
+      background-color: var(--clr-smoke);
+      height: 24px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-inner {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bar-inner--silver { background-color: var(--clr-silver-tier); }
+    .bar-inner--gold   { background-color: var(--clr-gold-tier); }
+    .bar-inner--diamond { background-color: #0088B2; }
+
+    .hotspot-dot {
+      position: absolute;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 12;
+      transition: transform var(--transition-fast);
+    }
+    .hotspot-dot:hover {
+      transform: translate(-50%, -50%) scale(1.5);
+      z-index: 20;
+    }
+    .hotspot-dot--silver  { width: 12px; height: 12px; background-color: var(--clr-silver-tier); border: 2px solid #FFF; }
+    .hotspot-dot--gold    { width: 16px; height: 16px; background-color: var(--clr-gold-tier); border: 2px solid #FFF; }
+    .hotspot-dot--diamond { width: 22px; height: 22px; background-color: #00C8FF; border: 2px solid #FFF; box-shadow: 0 0 10px #00C8FF; animation: pulse-dot 2s infinite; }
+
+    @media (max-width: 576px) {
+      .bar-chart-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">
+        <a href="index.html" class="nav-logo">
+          <span class="nav-logo__title">Balaji Analytics</span>
+          <span class="nav-logo__subtitle">Intelligence Console</span>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="admin.html">📊 Dashboard</a></li>
+        <li><a href="admin.html#vouchers">🎁 Gift Vouchers Won</a></li>
+        <li><a href="admin.html#products">📦 Product Inventory</a></li>
+        <li><a href="admin.html#customers">📋 Customer Logs</a></li>
+        <li><a href="analytics.html" class="active">📈 Customer Analytics</a></li>
+        <li><a href="whatsapp.html">📡 WhatsApp Broadcast</a></li>
+        <li style="margin-top: var(--space-xl); border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-md);"></li>
+        <li><a href="index.html" target="_blank">🌐 View Client Site ↗</a></li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <h2>Customer Intelligence & Delivery Analytics</h2>
+          <p style="font-size: 0.88rem; color: var(--clr-ash);">Palwal Region Financial Tiers & Geographic Hotspots</p>
+        </div>
+      </div>
+
+      <!-- KPI STRIP -->
+      <div class="stat-grid" style="margin-bottom: var(--space-2xl);">
+        <div class="stat-card" style="border-top-color: var(--clr-espresso);">
+          <span class="stat-card__number" id="kpi-total-cust">0</span>
+          <span class="stat-card__label">Total Enquiries</span>
+        </div>
+
+        <div class="stat-card" style="border-top-color: var(--clr-success);">
+          <span class="stat-card__number" id="kpi-total-rev">₹0</span>
+          <span class="stat-card__label">Pipeline Revenue</span>
+        </div>
+
+        <div class="stat-card" style="border-top-color: #005577;">
+          <span class="stat-card__number" id="kpi-diamond-cnt">0</span>
+          <span class="stat-card__label">💎 Diamond Elite</span>
+        </div>
+
+        <div class="stat-card" style="border-top-color: var(--clr-gold-tier);">
+          <span class="stat-card__number" id="kpi-gold-cnt">0</span>
+          <span class="stat-card__label">🌟 Gold Members</span>
+        </div>
+      </div>
+
+      <!-- TIER SEGMENTATION GRID -->
+      <h3 style="margin-bottom: var(--space-md);">Financial Segment Distribution</h3>
+      <div class="grid-3" style="margin-bottom: var(--space-2xl);">
+        <!-- SILVER CARD -->
+        <div class="card" style="padding: var(--space-xl); border-top: 4px solid var(--clr-silver-tier);">
+          <span class="tier-badge tier-badge--silver" style="margin-bottom: var(--space-sm);">Silver Segment</span>
+          <h4 style="margin-bottom: 4px;">Budget Buyers (< ₹1L)</h4>
+          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Entry-level & study furniture</p>
+          <div style="font-size: 1.8rem; font-weight: 700; color: var(--clr-espresso);" id="silver-count">0 Clients</div>
+          <p id="silver-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
+          <a href="whatsapp.html?tier=silver" class="btn btn--outline btn--sm btn--block">Message Silver Tier →</a>
+        </div>
+
+        <!-- GOLD CARD -->
+        <div class="card" style="padding: var(--space-xl); border-top: 4px solid var(--clr-gold-tier);">
+          <span class="tier-badge tier-badge--gold" style="margin-bottom: var(--space-sm);">Gold Segment</span>
+          <h4 style="margin-bottom: 4px;">Premium Buyers (₹1L–₹2L)</h4>
+          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Dining sets & executive suites</p>
+          <div style="font-size: 1.8rem; font-weight: 700; color: var(--clr-gold-dim);" id="gold-count">0 Clients</div>
+          <p id="gold-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
+          <a href="whatsapp.html?tier=gold" class="btn btn--outline btn--sm btn--block">Message Gold Tier →</a>
+        </div>
+
+        <!-- DIAMOND CARD -->
+        <div class="card" style="padding: var(--space-xl); border-top: 4px solid #00C8FF; box-shadow: 0 0 20px rgba(185, 242, 255, 0.4);">
+          <span class="tier-badge tier-badge--diamond" style="margin-bottom: var(--space-sm);">Diamond Segment</span>
+          <h4 style="margin-bottom: 4px;">Ultra-Luxury Elite (> ₹2L)</h4>
+          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Maharaja Beds & Mughal Armoires</p>
+          <div style="font-size: 1.8rem; font-weight: 700; color: #005577;" id="diamond-count">0 Clients</div>
+          <p id="diamond-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
+          <a href="whatsapp.html?tier=diamond" class="btn btn--primary btn--sm btn--block">Message Diamond Elite →</a>
+        </div>
+      </div>
+
+      <!-- REVENUE BAR CHART & HOTSPOT MAP -->
+      <div class="grid-2" style="margin-bottom: var(--space-2xl);">
+        <!-- Bar Chart Card -->
+        <div class="card" style="padding: var(--space-xl);">
+          <h3>Revenue Share by Tier</h3>
+          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Pipeline monetary breakdown</p>
+          
+          <div class="bar-chart-container">
+            <div class="bar-chart-row">
+              <span class="ui-text" style="font-weight: 600;">💎 Diamond</span>
+              <div class="bar-outer">
+                <div class="bar-inner bar-inner--diamond" id="bar-diamond"></div>
+              </div>
+              <span id="bar-val-diamond" class="mono-text" style="text-align: right;">₹0</span>
+            </div>
+
+            <div class="bar-chart-row">
+              <span class="ui-text" style="font-weight: 600;">🌟 Gold</span>
+              <div class="bar-outer">
+                <div class="bar-inner bar-inner--gold" id="bar-gold"></div>
+              </div>
+              <span id="bar-val-gold" class="mono-text" style="text-align: right;">₹0</span>
+            </div>
+
+            <div class="bar-chart-row">
+              <span class="ui-text" style="font-weight: 600;">⬜ Silver</span>
+              <div class="bar-outer">
+                <div class="bar-inner bar-inner--silver" id="bar-silver"></div>
+              </div>
+              <span id="bar-val-silver" class="mono-text" style="text-align: right;">₹0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hotspot Summary Card -->
+        <div class="card" style="padding: var(--space-xl);">
+          <h3>Palwal Area Delivery Density</h3>
+          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Top delivery concentration zones</p>
+          
+          <div id="density-summary" style="background-color: var(--clr-smoke); padding: var(--space-md); border-radius: var(--radius-md); font-weight: 600; margin-bottom: var(--space-md);">
+            📍 Highest Concentration: Jaber Nagar (Near OBC Bank)
+          </div>
+
+          <div style="font-size: 0.9rem; color: var(--clr-bark); line-height: 1.6;">
+            Our white-glove logistics team provides same-day complimentary setup for all Jaber Nagar, Sector 2, and Old Grain Market deliveries.
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+      <!-- GEOGRAPHIC HOTSPOT MAP (REAL OPENSTREETMAP) -->
+      <div class="card" style="padding: var(--space-xl); margin-bottom: var(--space-2xl);">
+        <h3>Palwal Real Delivery Hotspot Visualizer</h3>
+        <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Real-time OpenStreetMap rendering customer order locations across Palwal</p>
+
+        <div class="map-container" style="height: 480px; padding: 0; overflow: hidden; border: 2px solid var(--clr-gold);" id="hotspot-map-container">
+          <div id="analytics-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
+        </div>
+
+        <div class="flex-between" style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--clr-ash);">
+          <div style="display: flex; gap: var(--space-md);">
+            <span>⚪ Silver Client (< ₹1L)</span>
+            <span>🟡 Gold Client (₹1L–2L)</span>
+            <span>🔵 Diamond Elite (> ₹2L)</span>
+          </div>
+          <span>Showing 10 Active Palwal Delivery Locations</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const stats = LuxeWood.getTierStats();
+      const hotspots = LuxeWood.getHotspotData();
+
+      // KPI Values
+      document.getElementById('kpi-total-cust').innerText = stats.total.count;
+      document.getElementById('kpi-total-rev').innerText = LuxeWood.formatPrice(stats.total.revenue);
+      document.getElementById('kpi-diamond-cnt').innerText = stats.diamond.count;
+      document.getElementById('kpi-gold-cnt').innerText = stats.gold.count;
+
+      // Tier Segment Cards
+      document.getElementById('silver-count').innerText = `${stats.silver.count} Clients`;
+      document.getElementById('silver-rev').innerText = `${LuxeWood.formatPrice(stats.silver.revenue)} Total`;
+
+      document.getElementById('gold-count').innerText = `${stats.gold.count} Clients`;
+      document.getElementById('gold-rev').innerText = `${LuxeWood.formatPrice(stats.gold.revenue)} Total`;
+
+      document.getElementById('diamond-count').innerText = `${stats.diamond.count} Clients`;
+      document.getElementById('diamond-rev').innerText = `${LuxeWood.formatPrice(stats.diamond.revenue)} Total`;
+
+      // Animated Bar Chart
+      const maxRev = Math.max(stats.silver.revenue, stats.gold.revenue, stats.diamond.revenue) || 1;
+      
+      setTimeout(() => {
+        document.getElementById('bar-diamond').style.width = `${(stats.diamond.revenue / maxRev) * 100}%`;
+        document.getElementById('bar-gold').style.width = `${(stats.gold.revenue / maxRev) * 100}%`;
+        document.getElementById('bar-silver').style.width = `${(stats.silver.revenue / maxRev) * 100}%`;
+      }, 200);
+
+      document.getElementById('bar-val-diamond').innerText = LuxeWood.formatPrice(stats.diamond.revenue);
+      document.getElementById('bar-val-gold').innerText = LuxeWood.formatPrice(stats.gold.revenue);
+      document.getElementById('bar-val-silver').innerText = LuxeWood.formatPrice(stats.silver.revenue);
+
+      // Render Real Leaflet Map for Palwal Hotspots
+      const mapElem = document.getElementById('analytics-leaflet-map');
+      if (mapElem && typeof L !== 'undefined') {
+        const palwalHotspotMap = L.map('analytics-leaflet-map').setView([28.1450, 77.3280], 14);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(palwalHotspotMap);
+
+        // Real Palwal Area Coords Mapping
+        const areaCoords = {
+          "Jaber Nagar (Near OBC Bank), Palwal": [28.1450, 77.3280],
+          "Sector 2, Palwal": [28.1510, 77.3320],
+          "Old Grain Market, Palwal": [28.1420, 77.3240],
+          "NH-19 Highway Side, Palwal": [28.1480, 77.3390],
+          "Railway Station Area, Palwal": [28.1390, 77.3290],
+          "New Bus Stand, Palwal": [28.1460, 77.3210],
+          "Civil Lines, Palwal": [28.1530, 77.3250],
+          "Badarpur Colony, Palwal": [28.1410, 77.3350],
+          "Model Town, Palwal": [28.1490, 77.3180]
+        };
+
+        const tierColors = {
+          silver: "#A8A8B3",
+          gold: "#D4AF37",
+          diamond: "#00C8FF"
+        };
+
+        hotspots.forEach(h => {
+          const base = areaCoords[h.location] || [28.1450 + (Math.random()*0.01 - 0.005), 77.3280 + (Math.random()*0.01 - 0.005)];
+          const color = tierColors[h.tier] || "#D4AF37";
+
+          const markerIcon = L.divIcon({
+            className: 'custom-hotspot-icon',
+            html: `<div style="background-color:${color}; width:16px; height:16px; border-radius:50%; border:2px solid #FFF; box-shadow:0 0 10px ${color};"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+          });
+
+          const marker = L.marker(base, { icon: markerIcon }).addTo(palwalHotspotMap);
+          marker.bindPopup(`
+            <div style="font-family: sans-serif; padding: 4px;">
+              <strong style="color: #2C1B12;">${h.name}</strong> (${h.tier.toUpperCase()})<br>
+              <span style="font-size: 0.85rem; color: #555;">${h.location}</span><br>
+              <span style="font-size: 0.85rem; color: #2D6A4F; font-weight:600;">Product: ${h.productName} (${LuxeWood.formatPrice(h.price)})</span>
+            </div>
+          `);
+        });
+      }
+
+      // Find Highest Concentration
+      const locCounts = {};
+      hotspots.forEach(h => {
+        locCounts[h.location] = (locCounts[h.location] || 0) + 1;
+      });
+
+      let topLoc = "Jaber Nagar (Near OBC Bank), Palwal";
+      let maxCount = 0;
+      Object.keys(locCounts).forEach(loc => {
+        if (locCounts[loc] > maxCount) {
+          maxCount = locCounts[loc];
+          topLoc = loc;
+        }
+      });
+
+      document.getElementById('density-summary').innerText = `📍 Highest Delivery Concentration: ${topLoc} (${maxCount} Orders)`;
+    });
+  </script>
+</body>
+</html>
