@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!--
     Balaji Furnishers & Traders (LuxeWood) — analytics.html
@@ -11,8 +12,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Intelligence & Analytics — Balaji Furnishers & Traders</title>
-  
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
   <link rel="stylesheet" href="style.css">
   <style>
     .bar-chart-container {
@@ -21,12 +23,14 @@
       gap: var(--space-md);
       margin-top: var(--space-md);
     }
+
     .bar-chart-row {
       display: grid;
       grid-template-columns: 140px 1fr 120px;
       align-items: center;
       gap: var(--space-md);
     }
+
     .bar-outer {
       background-color: var(--clr-smoke);
       height: 24px;
@@ -34,15 +38,25 @@
       overflow: hidden;
       position: relative;
     }
+
     .bar-inner {
       height: 100%;
       border-radius: var(--radius-pill);
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .bar-inner--silver { background-color: var(--clr-silver-tier); }
-    .bar-inner--gold   { background-color: var(--clr-gold-tier); }
-    .bar-inner--diamond { background-color: #0088B2; }
+
+    .bar-inner--silver {
+      background-color: var(--clr-silver-tier);
+    }
+
+    .bar-inner--gold {
+      background-color: var(--clr-gold-tier);
+    }
+
+    .bar-inner--diamond {
+      background-color: #0088B2;
+    }
 
     .hotspot-dot {
       position: absolute;
@@ -52,13 +66,34 @@
       z-index: 12;
       transition: transform var(--transition-fast);
     }
+
     .hotspot-dot:hover {
       transform: translate(-50%, -50%) scale(1.5);
       z-index: 20;
     }
-    .hotspot-dot--silver  { width: 12px; height: 12px; background-color: var(--clr-silver-tier); border: 2px solid #FFF; }
-    .hotspot-dot--gold    { width: 16px; height: 16px; background-color: var(--clr-gold-tier); border: 2px solid #FFF; }
-    .hotspot-dot--diamond { width: 22px; height: 22px; background-color: #00C8FF; border: 2px solid #FFF; box-shadow: 0 0 10px #00C8FF; animation: pulse-dot 2s infinite; }
+
+    .hotspot-dot--silver {
+      width: 12px;
+      height: 12px;
+      background-color: var(--clr-silver-tier);
+      border: 2px solid #FFF;
+    }
+
+    .hotspot-dot--gold {
+      width: 16px;
+      height: 16px;
+      background-color: var(--clr-gold-tier);
+      border: 2px solid #FFF;
+    }
+
+    .hotspot-dot--diamond {
+      width: 22px;
+      height: 22px;
+      background-color: #00C8FF;
+      border: 2px solid #FFF;
+      box-shadow: 0 0 10px #00C8FF;
+      animation: pulse-dot 2s infinite;
+    }
 
     @media (max-width: 576px) {
       .bar-chart-row {
@@ -69,6 +104,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="admin-wrapper">
@@ -88,7 +124,9 @@
         <li><a href="admin.html#customers">📋 Customer Logs</a></li>
         <li><a href="analytics.html" class="active">📈 Customer Analytics</a></li>
         <li><a href="whatsapp.html">📡 WhatsApp Broadcast</a></li>
-        <li style="margin-top: var(--space-xl); border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-md);"></li>
+        <li
+          style="margin-top: var(--space-xl); border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: var(--space-md);">
+        </li>
         <li><a href="index.html" target="_blank">🌐 View Client Site ↗</a></li>
       </ul>
     </aside>
@@ -132,29 +170,37 @@
         <div class="card" style="padding: var(--space-xl); border-top: 4px solid var(--clr-silver-tier);">
           <span class="tier-badge tier-badge--silver" style="margin-bottom: var(--space-sm);">Silver Segment</span>
           <h4 style="margin-bottom: 4px;">Budget Buyers (< ₹1L)</h4>
-          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Entry-level & study furniture</p>
-          <div style="font-size: 1.8rem; font-weight: 700; color: var(--clr-espresso);" id="silver-count">0 Clients</div>
-          <p id="silver-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
-          <a href="whatsapp.html?tier=silver" class="btn btn--outline btn--sm btn--block">Message Silver Tier →</a>
+              <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Entry-level & study
+                furniture</p>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--clr-espresso);" id="silver-count">0 Clients
+              </div>
+              <p id="silver-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0
+                Total</p>
+              <a href="whatsapp.html?tier=silver" class="btn btn--outline btn--sm btn--block">Message Silver Tier →</a>
         </div>
 
         <!-- GOLD CARD -->
         <div class="card" style="padding: var(--space-xl); border-top: 4px solid var(--clr-gold-tier);">
           <span class="tier-badge tier-badge--gold" style="margin-bottom: var(--space-sm);">Gold Segment</span>
           <h4 style="margin-bottom: 4px;">Premium Buyers (₹1L–₹2L)</h4>
-          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Dining sets & executive suites</p>
+          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Dining sets & executive
+            suites</p>
           <div style="font-size: 1.8rem; font-weight: 700; color: var(--clr-gold-dim);" id="gold-count">0 Clients</div>
-          <p id="gold-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
+          <p id="gold-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total
+          </p>
           <a href="whatsapp.html?tier=gold" class="btn btn--outline btn--sm btn--block">Message Gold Tier →</a>
         </div>
 
         <!-- DIAMOND CARD -->
-        <div class="card" style="padding: var(--space-xl); border-top: 4px solid #00C8FF; box-shadow: 0 0 20px rgba(185, 242, 255, 0.4);">
+        <div class="card"
+          style="padding: var(--space-xl); border-top: 4px solid #00C8FF; box-shadow: 0 0 20px rgba(185, 242, 255, 0.4);">
           <span class="tier-badge tier-badge--diamond" style="margin-bottom: var(--space-sm);">Diamond Segment</span>
           <h4 style="margin-bottom: 4px;">Ultra-Luxury Elite (> ₹2L)</h4>
-          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Maharaja Beds & Mughal Armoires</p>
+          <p style="font-size: 0.85rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Maharaja Beds & Mughal
+            Armoires</p>
           <div style="font-size: 1.8rem; font-weight: 700; color: #005577;" id="diamond-count">0 Clients</div>
-          <p id="diamond-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0 Total</p>
+          <p id="diamond-rev" style="color: var(--clr-bark); font-size: 0.95rem; margin-bottom: var(--space-lg);">₹0
+            Total</p>
           <a href="whatsapp.html?tier=diamond" class="btn btn--primary btn--sm btn--block">Message Diamond Elite →</a>
         </div>
       </div>
@@ -164,8 +210,9 @@
         <!-- Bar Chart Card -->
         <div class="card" style="padding: var(--space-xl);">
           <h3>Revenue Share by Tier</h3>
-          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Pipeline monetary breakdown</p>
-          
+          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Pipeline monetary
+            breakdown</p>
+
           <div class="bar-chart-container">
             <div class="bar-chart-row">
               <span class="ui-text" style="font-weight: 600;">💎 Diamond</span>
@@ -196,14 +243,17 @@
         <!-- Hotspot Summary Card -->
         <div class="card" style="padding: var(--space-xl);">
           <h3>Palwal Area Delivery Density</h3>
-          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Top delivery concentration zones</p>
-          
-          <div id="density-summary" style="background-color: var(--clr-smoke); padding: var(--space-md); border-radius: var(--radius-md); font-weight: 600; margin-bottom: var(--space-md);">
+          <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-md);">Top delivery
+            concentration zones</p>
+
+          <div id="density-summary"
+            style="background-color: var(--clr-smoke); padding: var(--space-md); border-radius: var(--radius-md); font-weight: 600; margin-bottom: var(--space-md);">
             📍 Highest Concentration: Jaber Nagar (Near OBC Bank)
           </div>
 
           <div style="font-size: 0.9rem; color: var(--clr-bark); line-height: 1.6;">
-            Our white-glove logistics team provides same-day complimentary setup for all Jaber Nagar, Sector 2, and Old Grain Market deliveries.
+            Our white-glove logistics team provides same-day complimentary setup for all Jaber Nagar, Sector 2, and Old
+            Grain Market deliveries.
           </div>
         </div>
       </div>
@@ -214,17 +264,20 @@
       <!-- GEOGRAPHIC HOTSPOT MAP (REAL OPENSTREETMAP) -->
       <div class="card" style="padding: var(--space-xl); margin-bottom: var(--space-2xl);">
         <h3>Palwal Real Delivery Hotspot Visualizer</h3>
-        <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Real-time OpenStreetMap rendering customer order locations across Palwal</p>
+        <p style="font-size: 0.88rem; color: var(--clr-ash); margin-bottom: var(--space-lg);">Real-time OpenStreetMap
+          rendering customer order locations across Palwal</p>
 
-        <div class="map-container" style="height: 480px; padding: 0; overflow: hidden; border: 2px solid var(--clr-gold);" id="hotspot-map-container">
+        <div class="map-container"
+          style="height: 480px; padding: 0; overflow: hidden; border: 2px solid var(--clr-gold);"
+          id="hotspot-map-container">
           <div id="analytics-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
         </div>
 
         <div class="flex-between" style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--clr-ash);">
           <div style="display: flex; gap: var(--space-md);">
             <span>⚪ Silver Client (< ₹1L)</span>
-            <span>🟡 Gold Client (₹1L–2L)</span>
-            <span>🔵 Diamond Elite (> ₹2L)</span>
+                <span>🟡 Gold Client (₹1L–2L)</span>
+                <span>🔵 Diamond Elite (> ₹2L)</span>
           </div>
           <span>Showing 10 Active Palwal Delivery Locations</span>
         </div>
@@ -258,7 +311,7 @@
 
       // Animated Bar Chart
       const maxRev = Math.max(stats.silver.revenue, stats.gold.revenue, stats.diamond.revenue) || 1;
-      
+
       setTimeout(() => {
         document.getElementById('bar-diamond').style.width = `${(stats.diamond.revenue / maxRev) * 100}%`;
         document.getElementById('bar-gold').style.width = `${(stats.gold.revenue / maxRev) * 100}%`;
@@ -299,7 +352,7 @@
         };
 
         hotspots.forEach(h => {
-          const base = areaCoords[h.location] || [28.1450 + (Math.random()*0.01 - 0.005), 77.3280 + (Math.random()*0.01 - 0.005)];
+          const base = areaCoords[h.location] || [28.1450 + (Math.random() * 0.01 - 0.005), 77.3280 + (Math.random() * 0.01 - 0.005)];
           const color = tierColors[h.tier] || "#D4AF37";
 
           const markerIcon = L.divIcon({
@@ -339,4 +392,5 @@
     });
   </script>
 </body>
+
 </html>

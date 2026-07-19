@@ -61,32 +61,40 @@
       #offer-step-1 {
         padding: var(--space-lg) var(--space-md) !important;
       }
+
       #offer-step-3 .card {
         padding: var(--space-lg) var(--space-md) !important;
       }
+
       .reveal-title {
         font-size: clamp(1.3rem, 6vw, 1.9rem) !important;
         line-height: 1.3;
       }
+
       .reveal-amount {
         font-size: clamp(1.7rem, 8vw, 2.4rem) !important;
       }
+
       .reveal-actions {
         grid-template-columns: 1fr !important;
         gap: var(--space-sm) !important;
       }
+
       #offer-step-1 .grid-2 {
         grid-template-columns: 1fr !important;
         gap: var(--space-sm) !important;
       }
     }
+
     @media (max-width: 480px) {
       .reveal-title {
         font-size: 1.25rem !important;
       }
+
       .reveal-amount {
         font-size: 1.6rem !important;
       }
+
       #offer-step-3 .code-box strong {
         font-size: 1.1rem !important;
         letter-spacing: 1px !important;
@@ -223,11 +231,15 @@
           <div class="form-group" style="margin-bottom: var(--space-md);">
             <label class="form-label" style="color: var(--clr-gold);">📍 Pinned Delivery Location *</label>
             <div style="display: flex; gap: var(--space-sm); align-items: stretch; flex-wrap: wrap;">
-              <button type="button" id="btn-open-map-modal" class="btn btn--outline" style="flex: 1 1 200px; border-color: var(--clr-gold); color: #FFF; background: rgba(212,175,55,0.06); gap: 6px; white-space: normal; padding: 10px 14px; text-align: center;">
+              <button type="button" id="btn-open-map-modal" class="btn btn--outline"
+                style="flex: 1 1 200px; border-color: var(--clr-gold); color: #FFF; background: rgba(212,175,55,0.06); gap: 6px; white-space: normal; padding: 10px 14px; text-align: center;">
                 🗺️ Choose Delivery Location on Map
               </button>
-              <div style="flex: 1 1 200px; background: rgba(255,255,255,0.03); border: 1.5px solid rgba(212,175,55,0.25); border-radius: var(--radius-md); padding: 10px; display: flex; align-items: center; justify-content: center; text-align: center;">
-                <span id="offer-coords-display" style="font-size: 0.8rem; color: var(--clr-gold); font-family: var(--font-mono); font-weight: bold;">[28.1450, 77.3280] (Default)</span>
+              <div
+                style="flex: 1 1 200px; background: rgba(255,255,255,0.03); border: 1.5px solid rgba(212,175,55,0.25); border-radius: var(--radius-md); padding: 10px; display: flex; align-items: center; justify-content: center; text-align: center;">
+                <span id="offer-coords-display"
+                  style="font-size: 0.8rem; color: var(--clr-gold); font-family: var(--font-mono); font-weight: bold;">[28.1450,
+                  77.3280] (Default)</span>
               </div>
             </div>
           </div>
@@ -256,7 +268,7 @@
       <div id="offer-step-3" style="display: none; max-width: 750px; margin: 0 auto;">
         <div class="card"
           style="padding: var(--space-2xl) var(--space-xl); background: linear-gradient(135deg, #2C1B12 0%, #1A1008 100%); border: 3px solid var(--clr-gold); box-shadow: var(--shadow-gold); position: relative; text-align: center; border-radius: var(--radius-lg);">
-          
+
           <div style="margin-bottom: var(--space-sm);">
             <span class="tier-badge tier-badge--diamond"
               style="display: inline-block; font-size: 0.82rem; padding: 6px 16px; box-shadow: 0 0 15px #D4AF37; text-transform: uppercase;">
@@ -269,7 +281,8 @@
             CONGRATULATIONS!</span>
 
           <h2 class="reveal-title" style="color: #FFF; font-size: 2.4rem; margin: var(--space-xs) 0;">
-            You Won <span id="reveal-amount" class="reveal-amount" style="color: var(--clr-gold); font-size: 2.8rem;">₹7,500</span> Royal Cash
+            You Won <span id="reveal-amount" class="reveal-amount"
+              style="color: var(--clr-gold); font-size: 2.8rem;">₹7,500</span> Royal Cash
             Voucher!
           </h2>
           <p id="reveal-terms" style="color: var(--clr-ash); font-size: 1.05rem; margin-bottom: var(--space-lg);">Valid
@@ -281,11 +294,13 @@
             <span
               style="font-size: 0.78rem; color: var(--clr-ash); text-transform: uppercase; font-family: var(--font-ui); letter-spacing: 1px;">Your
               Unique Redeem Code</span>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; width: 100%;">
+            <div
+              style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; width: 100%;">
               <strong
                 style="font-family: var(--font-mono); font-size: 1.5rem; color: var(--clr-gold); letter-spacing: 2px; word-break: break-all;"
                 id="reveal-code">BALAJI-ROYAL-7500-X82K</strong>
-              <button class="btn btn--outline btn--sm" id="btn-copy-code" style="white-space: nowrap; padding: 6px 14px; shrink: 0;">📋 Copy Code</button>
+              <button class="btn btn--outline btn--sm" id="btn-copy-code"
+                style="white-space: nowrap; padding: 6px 14px; shrink: 0;">📋 Copy Code</button>
             </div>
           </div>
 
@@ -307,14 +322,20 @@
   <!-- Interactive Map Pin Modal (Flipkart/Zomato style) -->
   <div class="modal-overlay" id="offer-map-modal">
     <div class="modal-box" style="max-width: 600px; background: var(--clr-carbon); border: 2px solid var(--clr-gold);">
-      <button class="modal__close" id="modal-close-offer-map" style="color: #FFF; background: rgba(255,255,255,0.1); border-radius: 50%; min-width: 36px; min-height: 36px; width: 36px; height: 36px; border: none; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+      <button class="modal__close" id="modal-close-offer-map"
+        style="color: #FFF; background: rgba(255,255,255,0.1); border-radius: 50%; min-width: 36px; min-height: 36px; width: 36px; height: 36px; border: none; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
       <div style="padding: var(--space-md); text-align: center; color: var(--clr-cream);">
-        <h3 style="color: var(--clr-gold); margin-bottom: 4px; font-family: var(--font-display); font-size: 1.2rem;">📍 Pin Delivery Address</h3>
-        <p style="font-size: 0.8rem; color: var(--clr-ash); margin-bottom: var(--space-sm); font-family: var(--font-ui);">Tap the map to pin your home location.</p>
-        <div id="offer-map-wrap" style="height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--clr-gold); margin-bottom: var(--space-md);">
+        <h3 style="color: var(--clr-gold); margin-bottom: 4px; font-family: var(--font-display); font-size: 1.2rem;">📍
+          Pin Delivery Address</h3>
+        <p
+          style="font-size: 0.8rem; color: var(--clr-ash); margin-bottom: var(--space-sm); font-family: var(--font-ui);">
+          Tap the map to pin your home location.</p>
+        <div id="offer-map-wrap"
+          style="height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--clr-gold); margin-bottom: var(--space-md);">
           <div id="offer-leaflet-map" style="width: 100%; height: 100%; background: #222;"></div>
         </div>
-        <button type="button" class="btn btn--primary btn--block" id="btn-confirm-map-pin" style="font-family: var(--font-ui); font-weight: 700;">Confirm Pinned Location ✓</button>
+        <button type="button" class="btn btn--primary btn--block" id="btn-confirm-map-pin"
+          style="font-family: var(--font-ui); font-weight: 700;">Confirm Pinned Location ✓</button>
       </div>
     </div>
   </div>

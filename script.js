@@ -523,7 +523,7 @@ const LuxeWood = (() => {
 
   function addProduct(productData) {
     const products = getProducts();
-    
+
     // Check duplicate name
     if (products.some(p => p.name.toLowerCase() === productData.name.trim().toLowerCase())) {
       throw new Error("A product with this name already exists.");
@@ -778,10 +778,10 @@ const LuxeWood = (() => {
     if (!codeStr) return null;
     const cleanCode = String(codeStr).trim().toUpperCase();
     const vouchers = getVouchers();
-    
+
     // First check localStorage vouchers
     let found = vouchers.find(v => v.code.toUpperCase() === cleanCode);
-    
+
     // If not found in localStorage, parse code pattern BALAJI-ROYAL-AMNT-XXXX
     if (!found) {
       const match = cleanCode.match(/^BALAJI-ROYAL-(\d+)-[A-Z0-9]{4}$/);
