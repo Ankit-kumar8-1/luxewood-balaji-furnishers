@@ -498,8 +498,7 @@ const LuxeWood = (() => {
   function getProductImage(prod) {
     if (!prod) return null;
     if (PRODUCT_IMAGE_MAP[prod.id]) return PRODUCT_IMAGE_MAP[prod.id];
-    if (prod.images && prod.images[0] && prod.images[0].startsWith('http')) return prod.images[0];
-    if (prod.images && prod.images[0] && prod.images[0].startsWith('file:')) return prod.images[0];
+    if (prod.images && prod.images[0]) return prod.images[0];
     return null;
   }
 
