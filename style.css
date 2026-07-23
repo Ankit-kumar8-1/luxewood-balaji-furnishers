@@ -1,5 +1,5 @@
 /*
-  Balaji Furnishers & Traders (LuxeWood) — style.css
+  Haryana Traders (LuxeWood) — style.css
   Role: Master Design System — Tokens, Typography, Layout, Components, Modals, Maps, Admin & Animations
   Dependencies: None (Google Fonts imported via @import)
   Phase: 1 — Step 1
@@ -300,9 +300,30 @@ a {
 
 .nav-logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   flex-shrink: 0;
   text-decoration: none;
+}
+
+.nav-logo__img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(201, 163, 75, 0.55));
+  transition: filter 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.nav-logo:hover .nav-logo__img {
+  filter: drop-shadow(0 0 12px rgba(201, 163, 75, 0.9));
+  transform: scale(1.05);
+}
+
+.nav-logo__text {
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-logo__title {

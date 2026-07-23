@@ -1,5 +1,5 @@
 /*
-  Balaji Furnishers & Traders (LuxeWood) — script.js
+  Haryana Traders (LuxeWood) — script.js
   Role: Global State Machine — localStorage CRUD, Tier Engine, Pre-Seeding, Event Bus & Toast System
   Dependencies: None
   Phase: 1 — Step 2
@@ -486,7 +486,7 @@ const LuxeWood = (() => {
         setItem(KEYS.CUSTOMERS, INITIAL_CUSTOMERS);
         setItem(KEYS.SETTINGS, {
           seeded: true,
-          storeName: "Balaji Furnishers & Traders",
+          storeName: "Haryana Traders",
           phone: "+91 9896097124",
           address: "Near OBC Bank, Jaber Nagar, Palwal, Haryana 121102"
         });
@@ -723,7 +723,7 @@ const LuxeWood = (() => {
     const rule = VOUCHER_RULES[amount] || { minPrice: 50000, label: "Valid on orders above ₹50,000" };
 
     const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
-    const code = `BALAJI-ROYAL-${amount}-${randomSuffix}`;
+    const code = `HARYANA-ROYAL-${amount}-${randomSuffix}`;
 
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 30); // 30 days validity
@@ -782,9 +782,9 @@ const LuxeWood = (() => {
     // First check localStorage vouchers
     let found = vouchers.find(v => v.code.toUpperCase() === cleanCode);
 
-    // If not found in localStorage, parse code pattern BALAJI-ROYAL-AMNT-XXXX
+    // If not found in localStorage, parse code pattern HARYANA-ROYAL-AMNT-XXXX
     if (!found) {
-      const match = cleanCode.match(/^BALAJI-ROYAL-(\d+)-[A-Z0-9]{4}$/);
+      const match = cleanCode.match(/^HARYANA-ROYAL-(\d+)-[A-Z0-9]{4}$/);
       if (match) {
         const amount = Number(match[1]);
         const rule = VOUCHER_RULES[amount];
@@ -828,7 +828,7 @@ const LuxeWood = (() => {
     ctx.fillStyle = '#D4AF37';
     ctx.font = 'bold 22px serif';
     ctx.textAlign = 'center';
-    ctx.fillText('BALAJI FURNISHERS & TRADERS — PALWAL', 400, 60);
+    ctx.fillText('HARYANA TRADERS — PALWAL', 400, 60);
 
     ctx.fillStyle = '#FAF3E0';
     ctx.font = 'italic 16px sans-serif';
@@ -879,7 +879,7 @@ const LuxeWood = (() => {
     const dataUrl = canvas.toDataURL('image/png');
     const a = document.createElement('a');
     a.href = dataUrl;
-    a.download = `Balaji_Royal_Voucher_${voucher.code}.png`;
+    a.download = `Haryana_Royal_Voucher_${voucher.code}.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

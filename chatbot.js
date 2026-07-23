@@ -1,5 +1,5 @@
 /*
-  Balaji Furnishers & Traders (LuxeWood) — chatbot.js
+  Haryana Traders (LuxeWood) — chatbot.js
   Role: Zero-Cost Client-Side AI Concierge Chatbot + Optional Live LLM Integration
   Position: Bottom Left (Separated from WhatsApp widget at Bottom Right)
 */
@@ -399,8 +399,8 @@
   // Create Chatbot Elements
   const triggerBtn = document.createElement('div');
   triggerBtn.className = 'ai-chat-trigger';
-  triggerBtn.title = 'Ask Balaji AI Assistant';
-  triggerBtn.innerHTML = `<img src="assets/ai_assistant_avatar.png" alt="Balaji AI" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"><span class="ai-chat-badge">AI</span>`;
+  triggerBtn.title = 'Ask Haryana AI Assistant';
+  triggerBtn.innerHTML = `<img src="assets/ai_assistant_avatar.png" alt="Haryana Traders AI" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"><span class="ai-chat-badge">AI</span>`;
 
   const chatWindow = document.createElement('div');
   chatWindow.className = 'ai-chat-window';
@@ -408,10 +408,10 @@
     <div class="ai-chat-header">
       <div class="ai-chat-header__info">
         <div class="ai-chat-avatar" style="overflow: hidden; padding: 0;">
-          <img src="assets/ai_assistant_avatar.png" alt="Balaji AI" style="width: 100%; height: 100%; object-fit: cover;">
+          <img src="assets/ai_assistant_avatar.png" alt="Haryana Traders AI" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <div>
-          <h4 class="ai-chat-header__title">Balaji Woodcraft AI</h4>
+          <h4 class="ai-chat-header__title">Haryana Woodcraft AI</h4>
           <span class="ai-chat-header__status">Instant Palwal Assistant</span>
         </div>
       </div>
@@ -420,7 +420,7 @@
 
     <div class="ai-chat-messages" id="ai-chat-messages">
       <div class="msg-bubble msg-bubble--bot">
-        Namaste! 🙏 I am <strong>Balaji Royal AI Assistant</strong>.<br>
+        Namaste! 🙏 I am <strong>Haryana Traders Royal AI Assistant</strong>.<br>
         Ask me anything about our 100% Solid Sheesham & Teak furniture, prices, cash vouchers (₹2,000–₹15,000), 50km free delivery, or showroom location in Palwal!
       </div>
     </div>
@@ -524,7 +524,7 @@
 
     if (q.includes('location') || q.includes('address') || q.includes('where') || q.includes('showroom') || q.includes('palwal') || q.includes('map')) {
       return `📍 <strong>Showroom Location:</strong><br>
-        <strong>Balaji Furnishers & Traders</strong><br>
+        <strong>Haryana Traders</strong><br>
         Near OBC Bank, Jaber Nagar, Palwal, Haryana 121102.<br><br>
         <a href="https://maps.google.com/?q=Jaber+Nagar+OBC+Bank+Palwal+Haryana" target="_blank" class="ai-action-btn">Open Google Maps Directions ↗</a>`;
     }
@@ -544,11 +544,11 @@
     if (q.includes('contact') || q.includes('whatsapp') || q.includes('phone') || q.includes('call') || q.includes('owner')) {
       return `📞 <strong>Direct Contact Details:</strong><br>
         • Phone / WhatsApp: <strong>+91 9896097124</strong><br><br>
-        <a href="https://wa.me/919896097124?text=Hello%20Balaji%20Furnishers%20owner%2C%20I'm%20inquiring%20about%20furniture" target="_blank" class="ai-action-btn" style="background:#25D366; color:#FFF !important;">💬 Open WhatsApp Chat ↗</a>`;
+        <a href="https://wa.me/919896097124?text=Hello%20Haryana%20Traders%20owner%2C%20I'm%20inquiring%20about%20furniture" target="_blank" class="ai-action-btn" style="background:#25D366; color:#FFF !important;">💬 Open WhatsApp Chat ↗</a>`;
     }
 
     // Default intelligent response
-    return `✨ At <strong>Balaji Furnishers & Traders (Est. 2009, Palwal)</strong>, we craft 100% solid Sheesham & Teak furniture.<br><br>
+    return `✨ At <strong>Haryana Traders (Est. 2009, Palwal)</strong>, we craft 100% solid Sheesham & Teak furniture.<br><br>
       <a href="products.html" class="ai-action-btn">🪑 Explore 8 Handcrafted Pieces →</a><br>
       <a href="offer.html" class="ai-action-btn" style="margin-top:4px;">🎁 Unwrap ₹2k-₹15k Voucher →</a>`;
   }

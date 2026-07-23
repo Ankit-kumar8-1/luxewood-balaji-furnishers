@@ -3,7 +3,7 @@
 
 <head>
   <!--
-    Balaji Furnishers & Traders (LuxeWood) — whatsapp.html
+    Haryana Traders (LuxeWood) — whatsapp.html
     Role: WhatsApp Bulk Broadcast Simulator Terminal Engine
     Dependencies: style.css, script.js
     Phase: 2 — Step 6
@@ -11,7 +11,7 @@
   -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp Broadcast Engine — Balaji Furnishers & Traders</title>
+  <title>WhatsApp Broadcast Engine — Haryana Traders</title>
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
@@ -112,8 +112,11 @@
     <aside class="admin-sidebar">
       <div class="sidebar-logo">
         <a href="index.html" class="nav-logo">
-          <span class="nav-logo__title">Balaji Broadcast</span>
-          <span class="nav-logo__subtitle">WhatsApp Terminal</span>
+          <img src="assets/logo.png" alt="Haryana Traders Logo" class="nav-logo__img" style="height: 40px;">
+          <span class="nav-logo__text">
+            <span class="nav-logo__title">Haryana Broadcast</span>
+            <span class="nav-logo__subtitle">WhatsApp Terminal</span>
+          </span>
         </a>
       </div>
 
@@ -171,14 +174,14 @@
             <label class="form-label" for="msg-template">Message Template *</label>
             <textarea id="msg-template" class="form-textarea" rows="6">Dear [Customer Name],
 
-Greetings from Balaji Furnishers & Traders (Near OBC Bank, Jaber Nagar, Palwal)! 🪵✨
+Greetings from Haryana Traders (Near OBC Bank, Jaber Nagar, Palwal)! 🪵✨
 
 We are pleased to offer exclusive priority access to our newly arrived handcrafted Sheesham & Teak furniture series tailored for [Tier Label] members.
 
 Visit our Palwal showroom today or reply to this WhatsApp to request a private video catalog.
 
 Call us: +91 9896097124
-— Balaji Furnishers Team</textarea>
+— Haryana Traders Team</textarea>
           </div>
 
           <!-- Clickable Variable Chips -->
@@ -220,11 +223,11 @@ Call us: +91 9896097124
                 <span class="terminal-dot terminal-dot--yellow"></span>
                 <span class="terminal-dot terminal-dot--green"></span>
               </div>
-              <span>Balaji Broadcast Terminal v2.0</span>
+              <span>Haryana Broadcast Terminal v2.0</span>
             </div>
 
             <div class="terminal-log" id="terminal-log">
-              <span class="t-dim">> Balaji WhatsApp Cloud API Engine v2.0 READY</span>
+              <span class="t-dim">> Haryana WhatsApp Cloud API Engine v2.0 READY</span>
               <span class="t-dim">> Handshake: ✓ VERIFIED | Region: IN-HR-PALWAL</span>
               <span class="t-dim">> Database: ✓ Connected | Sender: +919896097124</span>
               <span class="t-gold">> Select a target tier segment and click Launch...</span>
@@ -355,7 +358,7 @@ Call us: +91 9896097124
 
         logLine(`> [${new Date().toLocaleTimeString()}] INITIATING WHATSAPP BROADCAST...`, 't-info');
         logLine(`> Target Segment: ${tierSelect.value.toUpperCase()} (${currentAudience.length} Recipients)`, 't-gold');
-        logLine(`> Sender ID: Balaji Furnishers & Traders (+919896097124)`, 't-dim');
+        logLine(`> Sender ID: Haryana Traders (+919896097124)`, 't-dim');
         logLine(`> ----------------------------------------------------`, 't-dim');
 
         let index = 0;
@@ -444,7 +447,7 @@ Call us: +91 9896097124
         statusText.innerText = "Idle";
         progressBar.style.width = '0%';
         progressText.innerText = "0 / 0";
-        terminalLog.innerHTML = `<span class="t-dim">> Balaji WhatsApp Cloud API Engine v2.0 READY</span><span class="t-gold">> Select a target tier segment...</span>`;
+        terminalLog.innerHTML = `<span class="t-dim">> Haryana WhatsApp Cloud API Engine v2.0 READY</span><span class="t-gold">> Select a target tier segment...</span>`;
       };
 
       // 7. Export Log Text File
@@ -453,7 +456,7 @@ Call us: +91 9896097124
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `balaji_whatsapp_log_${Date.now()}.txt`;
+        a.download = `haryana_whatsapp_log_${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(url);
         LuxeWood.toast("📋 Broadcast terminal log exported!", "success");

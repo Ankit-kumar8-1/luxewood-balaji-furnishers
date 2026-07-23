@@ -3,7 +3,7 @@
 
 <head>
   <!--
-    Balaji Furnishers & Traders (LuxeWood) — admin.html
+    Haryana Traders (LuxeWood) — admin.html
     Role: Private Admin Control Panel — Product CRUD & Customer Enquiry Logs
     Dependencies: style.css, script.js
     Phase: 1 — Step 4
@@ -11,7 +11,7 @@
   -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal — Balaji Furnishers & Traders</title>
+  <title>Admin Portal — Haryana Traders</title>
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪵</text></svg>">
@@ -28,8 +28,11 @@
     <aside class="admin-sidebar">
       <div class="sidebar-logo">
         <a href="index.html" class="nav-logo">
-          <span class="nav-logo__title">Balaji Admin</span>
-          <span class="nav-logo__subtitle">Management Console</span>
+          <img src="assets/logo.png" alt="Haryana Traders Logo" class="nav-logo__img" style="height: 40px;">
+          <span class="nav-logo__text">
+            <span class="nav-logo__title">Haryana Admin</span>
+            <span class="nav-logo__subtitle">Management Console</span>
+          </span>
         </a>
       </div>
 
@@ -57,7 +60,7 @@
       <div class="admin-topbar">
         <div>
           <h2 id="page-title">Admin Overview</h2>
-          <p style="font-size: 0.88rem; color: var(--clr-ash);">Balaji Furnishers & Traders · Palwal Showroom System</p>
+          <p style="font-size: 0.88rem; color: var(--clr-ash);">Haryana Traders · Palwal Showroom System</p>
         </div>
 
         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -726,7 +729,7 @@
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `balaji_customer_logs_${Date.now()}.csv`);
+        link.setAttribute("download", `haryana_customer_logs_${Date.now()}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -978,7 +981,7 @@
             </td>
             <td>
               <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                <a href="https://wa.me/91${v.customerPhone || '9896097124'}?text=Hello%20${encodeURIComponent(v.customerName || 'Customer')}%2C%20Congratulations!%20Your%20Balaji%20Furnishers%20Royal%20Cash%20Voucher%20Code%20is%3A%20${v.code}%20(Value%3A%20%E2%82%B9${(v.amount || 0).toLocaleString('en-IN')}).%20Redeem%20now%20at%20our%20Jaber%20Nagar%20Palwal%20Showroom!" target="_blank" class="btn btn--primary btn--sm" style="padding: 4px 8px; font-size: 0.78rem;">📲 WhatsApp</a>
+                <a href="https://wa.me/91${v.customerPhone || '9896097124'}?text=Hello%20${encodeURIComponent(v.customerName || 'Customer')}%2C%20Congratulations!%20Your%20Haryana%20Traders%20Royal%20Cash%20Voucher%20Code%20is%3A%20${v.code}%20(Value%3A%20%E2%82%B9${(v.amount || 0).toLocaleString('en-IN')}).%20Redeem%20now%20at%20our%20Jaber%20Nagar%20Palwal%20Showroom!" target="_blank" class="btn btn--primary btn--sm" style="padding: 4px 8px; font-size: 0.78rem;">📲 WhatsApp</a>
                 <button class="btn btn--outline btn--sm view-vmap-btn" data-lat="${(v.latLng && v.latLng.lat) ? v.latLng.lat : 28.1450}" data-lng="${(v.latLng && v.latLng.lng) ? v.latLng.lng : 77.3280}" data-name="${v.customerName || 'Guest'}" data-loc="${v.location || 'Palwal'}" style="padding: 4px 8px; font-size: 0.78rem;">📍 Map Pin</button>
               </div>
             </td>
@@ -1026,7 +1029,7 @@
         const encodedUri = encodeURI(csv);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `balaji_gift_vouchers_${Date.now()}.csv`);
+        link.setAttribute("download", `haryana_gift_vouchers_${Date.now()}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
